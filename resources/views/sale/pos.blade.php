@@ -851,44 +851,90 @@
                                     <div role="document" class="modal-dialog modal-md">
                                         <div class="modal-content" style="border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
                                             <div class="modal-header bg-dark text-white py-2 px-3" style="display: flex; align-items: center; justify-content: space-between;">
-                                                <h5 class="modal-title text-white" style="font-size: 15px; margin: 0;"><i class="fa fa-camera text-info mr-1"></i> Live Barcode & QR Scanner</h5>
+                                                <h5 class="modal-title text-white" style="font-size: 15px; margin: 0;">
+                                                    <i class="fa fa-barcode text-info mr-1"></i> Barcode & QR Scanner
+                                                </h5>
                                                 <button type="button" data-dismiss="modal" aria-label="Close" class="close text-white" style="opacity: 0.9; margin: 0; padding: 0;"><span aria-hidden="true">&times;</span></button>
                                             </div>
                                             <div class="modal-body p-3">
                                                 <!-- Status Alert message -->
                                                 <div id="camera-status-alert" class="alert alert-info py-2 px-3 mb-2" style="font-size: 13px; display: none;"></div>
 
-                                                <!-- Camera device selection & Switch controls -->
-                                                <div id="camera-select-wrapper" class="mb-2" style="display: none;">
-                                                    <div class="d-flex align-items-center" style="gap: 8px;">
-                                                        <span class="text-muted" style="font-size: 12px; white-space: nowrap;"><i class="fa fa-video-camera"></i> Camera:</span>
-                                                        <select id="camera-select-dropdown" class="form-control form-control-sm" style="font-size: 12px; height: 32px;"></select>
-                                                        <button type="button" id="btn-switch-camera" class="btn btn-sm btn-outline-primary" style="white-space: nowrap; height: 32px; font-size: 12px;"><i class="fa fa-refresh"></i> Switch</button>
+                                                <!-- Navigation Mode Switcher -->
+                                                <div class="btn-group btn-group-toggle w-100 mb-2" data-toggle="buttons" style="display: flex; gap: 4px;">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary active" id="tab-live-camera" style="flex: 1; font-size: 12px; border-radius: 6px;">
+                                                        <i class="fa fa-camera mr-1"></i> Live Camera
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary" id="tab-upload-image" style="flex: 1; font-size: 12px; border-radius: 6px;">
+                                                        <i class="fa fa-image mr-1"></i> Upload Image
+                                                    </button>
+                                                </div>
+
+                                                <!-- SECTION 1: LIVE CAMERA SCAN -->
+                                                <div id="section-live-camera">
+                                                    <!-- Camera device selection & Switch controls -->
+                                                    <div id="camera-select-wrapper" class="mb-2" style="display: none;">
+                                                        <div class="d-flex align-items-center" style="gap: 8px;">
+                                                            <span class="text-muted" style="font-size: 12px; white-space: nowrap;"><i class="fa fa-video-camera"></i> Camera:</span>
+                                                            <select id="camera-select-dropdown" class="form-control form-control-sm" style="font-size: 12px; height: 32px;"></select>
+                                                            <button type="button" id="btn-switch-camera" class="btn btn-sm btn-outline-primary" style="white-space: nowrap; height: 32px; font-size: 12px;"><i class="fa fa-refresh"></i> Switch</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Scanner Viewport with Viewfinder Box & Laser Overlay -->
+                                                    <div class="scanner-viewport-box" style="position: relative; width: 100%; max-width: 460px; margin: 0 auto; background: #000; border-radius: 10px; overflow: hidden; min-height: 240px; display: flex; align-items: center; justify-content: center;">
+                                                        <div id="camera-reader" style="width: 100%;"></div>
+                                                        <div id="scanner-laser" style="display: none; position: absolute; left: 6%; right: 6%; height: 3px; background: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 18px #22c55e; animation: scannerLaserMove 2s infinite ease-in-out; pointer-events: none; z-index: 10;"></div>
+                                                    </div>
+
+                                                    <!-- Step-by-Step Permission Helper Guide (shown if blocked) -->
+                                                    <div id="camera-permission-guide" class="card mt-2 border-danger" style="display: none; background: #fff5f5;">
+                                                        <div class="card-body py-2 px-3">
+                                                            <h6 class="text-danger mb-1 font-weight-bold" style="font-size: 13px;"><i class="fa fa-exclamation-triangle"></i> Camera Unavailable / Blocked</h6>
+                                                            <p class="mb-1 text-dark" style="font-size: 12px;">Browser blocked camera or no webcam detected. You can allow it or use <b>Manual Entry</b> below:</p>
+                                                            <ol class="mb-2 pl-3 text-secondary" style="font-size: 12px; line-height: 1.5;">
+                                                                <li>Click the <strong>Lock (🔒)</strong> or <strong>Camera (🎥)</strong> icon next to the URL.</li>
+                                                                <li>Set <strong>Camera</strong> to <strong>Allow</strong>.</li>
+                                                                <li>Click <strong>"Allow & Retry Camera"</strong> below.</li>
+                                                            </ol>
+                                                            <button type="button" id="btn-request-permission-again" class="btn btn-danger btn-sm btn-block"><i class="fa fa-camera mr-1"></i> Allow & Retry Camera</button>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <!-- Scanner Viewport with Viewfinder Box & Laser Overlay -->
-                                                <div class="scanner-viewport-box" style="position: relative; width: 100%; max-width: 460px; margin: 0 auto; background: #000; border-radius: 10px; overflow: hidden; min-height: 260px; display: flex; align-items: center; justify-content: center;">
-                                                    <div id="camera-reader" style="width: 100%;"></div>
-                                                    <div id="scanner-laser" style="display: none; position: absolute; left: 6%; right: 6%; height: 3px; background: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 18px #22c55e; animation: scannerLaserMove 2s infinite ease-in-out; pointer-events: none; z-index: 10;"></div>
+                                                <!-- SECTION 2: UPLOAD BARCODE IMAGE -->
+                                                <div id="section-upload-image" style="display: none;">
+                                                    <div class="border border-dashed p-4 text-center rounded bg-light" id="drop-zone-upload" style="border: 2px dashed #94a3b8; border-radius: 8px;">
+                                                        <i class="fa fa-cloud-upload fa-3x text-primary mb-2"></i>
+                                                        <h6 class="font-weight-bold text-dark mb-1" style="font-size: 13px;">Upload Photo of Barcode</h6>
+                                                        <p class="text-muted mb-2" style="font-size: 11px;">Select a barcode image (JPG, PNG, WebP) to decode automatically.</p>
+                                                        <label for="barcode_file_input" class="btn btn-primary btn-sm px-3 mb-0" style="cursor: pointer;">
+                                                            <i class="fa fa-folder-open mr-1"></i> Select Barcode Image
+                                                        </label>
+                                                        <input type="file" id="barcode_file_input" accept="image/*" style="display: none;">
+                                                        <div id="file-scan-status" class="mt-2 text-info font-weight-bold" style="font-size: 12px; display: none;"></div>
+                                                    </div>
                                                 </div>
 
-                                                <!-- Step-by-Step Permission Helper Guide (shown if blocked) -->
-                                                <div id="camera-permission-guide" class="card mt-3 border-danger" style="display: none; background: #fff5f5;">
-                                                    <div class="card-body py-2 px-3">
-                                                        <h6 class="text-danger mb-1 font-weight-bold" style="font-size: 13px;"><i class="fa fa-exclamation-triangle"></i> Camera Permission Blocked</h6>
-                                                        <p class="mb-1 text-dark" style="font-size: 12px;">Your browser blocked camera permission. To enable it:</p>
-                                                        <ol class="mb-2 pl-3 text-secondary" style="font-size: 12px; line-height: 1.5;">
-                                                            <li>Click the <strong>Lock (🔒)</strong> or <strong>Camera (🎥)</strong> icon next to the URL at the top.</li>
-                                                            <li>Set <strong>Camera</strong> to <strong>Allow</strong>.</li>
-                                                            <li>Click <strong>"Allow & Start Camera"</strong> below.</li>
-                                                        </ol>
-                                                        <button type="button" id="btn-request-permission-again" class="btn btn-danger btn-sm btn-block"><i class="fa fa-camera mr-1"></i> Allow & Start Camera</button>
+                                                <!-- SECTION 3: ALWAYS VISIBLE MANUAL BARCODE & SERIAL NUMBER ENTRY -->
+                                                <div class="mt-3 p-3 border rounded bg-white text-left shadow-sm" style="border-color: #cbd5e1 !important;">
+                                                    <label class="font-weight-bold text-dark mb-1 d-flex justify-content-between align-items-center" style="font-size: 12px;">
+                                                        <span><i class="fa fa-keyboard-o text-primary mr-1"></i> Can't scan? Enter Barcode / Serial Number manually:</span>
+                                                        <span class="badge badge-secondary" style="font-size: 10px;">Press Enter ↵</span>
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" id="manual_barcode_input" class="form-control" placeholder="Type or paste barcode, UPC, or Serial No..." style="font-family: monospace; font-size: 13px;">
+                                                        <div class="input-group-append">
+                                                            <button type="button" id="btn_submit_manual_barcode" class="btn btn-success px-3 font-weight-bold" style="font-size: 12px;">
+                                                                <i class="fa fa-plus-circle mr-1"></i> Add Product
+                                                            </button>
+                                                        </div>
                                                     </div>
+                                                    <small id="manual_barcode_error" class="text-danger mt-1 font-weight-bold" style="font-size: 11px; display: none;"></small>
                                                 </div>
 
                                                 <div class="text-center mt-2">
-                                                    <small class="text-muted" style="font-size: 11px;"><i class="fa fa-info-circle text-info"></i> Point camera steadily at barcode or QR code. Scanned items auto-add with Universal Serial Number.</small>
+                                                    <small class="text-muted" style="font-size: 11px;"><i class="fa fa-info-circle text-info mr-1"></i> Scanned or manually entered items are added instantly with their Universal Serial Number (UPC/SN) badge.</small>
                                                 </div>
                                             </div>
                                             <div class="modal-footer py-2 px-3 bg-light">
@@ -3584,8 +3630,87 @@ function launchHtml5Scanner(cameraId) {
 $(document).ready(function() {
     $('#cameraScanBtn').on('click', function(e) {
         e.preventDefault();
+        $('#manual_barcode_input').val('');
+        $('#manual_barcode_error').hide();
+        $('#file-scan-status').hide();
+        $('#tab-live-camera').addClass('active');
+        $('#tab-upload-image').removeClass('active');
+        $('#section-live-camera').show();
+        $('#section-upload-image').hide();
         $('#cameraModal').modal('show');
         startScanningSession();
+    });
+
+    // Tab switching between Live Camera & Upload Image
+    $('#tab-live-camera').on('click', function() {
+        $(this).addClass('active');
+        $('#tab-upload-image').removeClass('active');
+        $('#section-upload-image').hide();
+        $('#section-live-camera').show();
+        startScanningSession();
+    });
+
+    $('#tab-upload-image').on('click', function() {
+        $(this).addClass('active');
+        $('#tab-live-camera').removeClass('active');
+        stopActiveCameraScanner();
+        $('#section-live-camera').hide();
+        $('#section-upload-image').show();
+    });
+
+    // Manual Barcode / Serial Number Submission
+    function submitManualBarcode() {
+        var code = $('#manual_barcode_input').val().trim();
+        if (!code) {
+            $('#manual_barcode_error').text('Please type a barcode, UPC, or serial number.').show();
+            $('#manual_barcode_input').focus();
+            return;
+        }
+        $('#manual_barcode_error').hide();
+        playScanBeep();
+        $('#cameraModal').modal('hide');
+        stopActiveCameraScanner();
+        $('#lims_productcodeSearch').val(code);
+        productSearch(code);
+        $('#manual_barcode_input').val('');
+    }
+
+    $('#btn_submit_manual_barcode').on('click', function(e) {
+        e.preventDefault();
+        submitManualBarcode();
+    });
+
+    $('#manual_barcode_input').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            submitManualBarcode();
+        }
+    });
+
+    // Barcode Image File Upload & Auto-Decode
+    $('#barcode_file_input').on('change', function(e) {
+        if (!e.target.files || e.target.files.length === 0) return;
+        var file = e.target.files[0];
+        $('#file-scan-status').attr('class', 'mt-2 text-info font-weight-bold').html('<i class="fa fa-spinner fa-spin mr-1"></i> Decoding barcode from image...').show();
+
+        stopActiveCameraScanner(function() {
+            try {
+                var fileScanner = new Html5Qrcode("camera-reader");
+                fileScanner.scanFile(file, true)
+                .then(function(decodedText) {
+                    $('#file-scan-status').attr('class', 'mt-2 text-success font-weight-bold').html('<i class="fa fa-check-circle mr-1"></i> Barcode found: ' + decodedText).show();
+                    setTimeout(function() {
+                        onCameraScanSuccess(decodedText);
+                    }, 400);
+                })
+                .catch(function(err) {
+                    console.warn("File scan error:", err);
+                    $('#file-scan-status').attr('class', 'mt-2 text-danger font-weight-bold').html('<i class="fa fa-times-circle mr-1"></i> Could not detect a clear barcode in this photo. Please type it manually below.').show();
+                });
+            } catch(err2) {
+                $('#file-scan-status').attr('class', 'mt-2 text-danger font-weight-bold').html('Error reading file: ' + err2.message).show();
+            }
+        });
     });
 
     // Re-request permission button click handler
@@ -3613,6 +3738,8 @@ $(document).ready(function() {
         stopActiveCameraScanner();
         $('#camera-status-alert').hide();
         $('#camera-permission-guide').hide();
+        $('#manual_barcode_error').hide();
+        $('#file-scan-status').hide();
     });
 
     // Enter keypress on product search input for instant barcode gun scan
