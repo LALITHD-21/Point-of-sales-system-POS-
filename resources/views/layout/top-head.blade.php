@@ -346,6 +346,7 @@
     <script type="text/javascript" src="<?php echo asset('vendor/daterange/js/knockout-3.4.2.js') ?>"></script>
     <script type="text/javascript" src="<?php echo asset('vendor/daterange/js/daterangepicker.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo asset('vendor/datatable/jquery.dataTables.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo asset('vendor/html5-qrcode/html5-qrcode.min.js') ?>"></script>
     @stack('scripts')
     <script>
         if ('serviceWorker' in navigator ) {

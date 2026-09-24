@@ -3360,43 +3360,50 @@ function playScanBeep() {
     } catch(e) {}
 }
 
-// Live Camera Barcode & QR Scanner Integration
-var html5QrCode = null;
-$('#cameraModal').on('shown.bs.modal', function () {
-    if (!html5QrCode) {
-        html5QrCode = new Html5Qrcode("camera-reader");
+// Live Camera Barcode & QR Scanner Integration (using Html5QrcodeScanner for 100% device compatibility)
+var html5QrcodeScanner = null;
+
+function onCameraScanSuccess(decodedText, decodedResult) {
+    playScanBeep();
+    $('#cameraModal').modal('hide');
+    if (html5QrcodeScanner) {
+        html5QrcodeScanner.clear().catch(function(){});
+        html5QrcodeScanner = null;
     }
-    html5QrCode.start(
-        { facingMode: "environment" },
-        { 
-            fps: 15, 
-            qrbox: { width: 280, height: 160 },
-            aspectRatio: 1.777778
-        },
-        function (decodedText, decodedResult) {
-            playScanBeep();
-            $('#cameraModal').modal('hide');
-            html5QrCode.stop().then(function() {
-                $('#lims_productcodeSearch').val(decodedText);
-                productSearch(decodedText);
-            }).catch(function(err) {
-                $('#lims_productcodeSearch').val(decodedText);
-                productSearch(decodedText);
-            });
-        },
-        function (errorMessage) {}
-    ).catch(function(err) {
-        alert("Camera error or permission denied: " + err);
-        $('#cameraModal').modal('hide');
-    });
+    $('#lims_productcodeSearch').val(decodedText);
+    productSearch(decodedText);
+}
+
+function onCameraScanFailure(error) {
+    // Handled silently per frame
+}
+
+$('#cameraModal').on('shown.bs.modal', function () {
+    $('#camera-reader').empty();
+    try {
+        html5QrcodeScanner = new Html5QrcodeScanner(
+            "camera-reader",
+            {
+                fps: 15,
+                qrbox: { width: 280, height: 160 },
+                rememberLastUsedCamera: true
+            },
+            false
+        );
+        html5QrcodeScanner.render(onCameraScanSuccess, onCameraScanFailure);
+    } catch(err) {
+        console.error("Scanner init error:", err);
+        $('#camera-reader').html('<div class="alert alert-warning">Unable to initialize camera scanner. Please ensure camera permissions are allowed in your browser address bar.</div>');
+    }
 });
 
 $('#cameraModal').on('hidden.bs.modal', function () {
-    if (html5QrCode && html5QrCode.isScanning) {
-        html5QrCode.stop().catch(function(){});
+    if (html5QrcodeScanner) {
+        html5QrcodeScanner.clear().catch(function(){});
+        html5QrcodeScanner = null;
     }
+    $('#camera-reader').empty();
 });
 </script>
-<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 @endpush
