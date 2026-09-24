@@ -210,7 +210,12 @@
                     <td style="padding: 5px;width:30%">{{trans('file.Paid By')}}: {{$payment_data->paying_method}}</td>
                     <td style="padding: 5px;width:40%">{{trans('file.Amount')}}: {{number_format((float)$payment_data->amount, 2, '.', '')}}</td>
                     <td style="padding: 5px;width:30%">{{trans('file.Change')}}: {{number_format((float)$payment_data->change, 2, '.', '')}}</td>
-                </tr>                
+                </tr>
+                @if($payment_data->payment_note)
+                <tr style="background-color:#f1f5f9;">
+                    <td colspan="3" style="padding: 4px 6px; font-size: 11px; color: #1e293b;"><strong>{{trans('file.Note')}} / Ref:</strong> {{$payment_data->payment_note}}</td>
+                </tr>
+                @endif
                 @endforeach
                 <tr><td class="centered" colspan="3">{{trans('file.Thank you for shopping with us. Please come again')}}</td></tr>
                 <tr>

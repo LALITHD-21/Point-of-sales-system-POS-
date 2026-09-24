@@ -624,6 +624,9 @@ class SaleController extends Controller
                 $paying_method = 'Points';
                 $lims_payment_data->used_points = $data['used_points'];
             }
+            elseif($data['paid_by_id'] == 11) {
+                $paying_method = 'UPI';
+            }
 
             if($cash_register_data)
                 $lims_payment_data->cash_register_id = $cash_register_data->id;
@@ -1935,6 +1938,8 @@ class SaleController extends Controller
             $paying_method = 'Deposit';
         elseif($data['paid_by_id'] == 7)
             $paying_method = 'Points';
+        elseif($data['paid_by_id'] == 11)
+            $paying_method = 'UPI';
 
 
         $cash_register_data = CashRegister::where([

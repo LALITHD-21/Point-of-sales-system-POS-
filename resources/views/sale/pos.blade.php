@@ -746,6 +746,29 @@
             <audio id="mysoundclip2" preload="auto">
                 <source src="{{url('public/beep/beep-07.mp3')}}"></source>
             </audio>
+            <div class="col-12 mb-2">
+                <div class="pos-top-dashboard-bar d-flex justify-content-between align-items-center flex-wrap px-3 py-2 text-white" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">
+                    <div class="d-flex align-items-center" style="gap: 12px; flex-wrap: wrap;">
+                        <span class="badge badge-pill badge-success px-2 py-1" style="font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">
+                            <i class="fa fa-circle mr-1" style="font-size: 8px;"></i> TERMINAL #1 ONLINE
+                        </span>
+                        <span class="text-white-50" style="font-size: 12px;">
+                            <i class="fa fa-clock-o mr-1"></i> {{ date('D, d M Y') }}
+                        </span>
+                        <span class="badge badge-pill px-2 py-1 text-light" style="font-size: 11px; background: rgba(255,255,255,0.12);">
+                            <i class="fa fa-cubes mr-1 text-warning"></i> 192 Catalog Products
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center hotkeys-bar" style="gap: 8px; font-size: 11px; flex-wrap: wrap;">
+                        <span class="text-white-50 mr-1"><i class="fa fa-keyboard-o mr-1"></i> Hotkeys:</span>
+                        <span class="badge badge-dark border" style="background: rgba(255,255,255,0.08); font-size: 11px;"><kbd style="background: #334155; color: #fff;">F1</kbd> Scan / Search</span>
+                        <span class="badge badge-dark border" style="background: rgba(255,255,255,0.08); font-size: 11px;"><kbd style="background: #059669; color: #fff;">F2</kbd> Quick Cash</span>
+                        <span class="badge badge-dark border" style="background: rgba(255,255,255,0.08); font-size: 11px;"><kbd style="background: #6366f1; color: #fff;">F4</kbd> UPI QR Pay</span>
+                        <span class="badge badge-dark border" style="background: rgba(255,255,255,0.08); font-size: 11px;"><kbd style="background: #d97706; color: #fff;">F8</kbd> Full Payment</span>
+                        <span class="badge badge-dark border" style="background: rgba(255,255,255,0.08); font-size: 11px;"><kbd style="background: #dc2626; color: #fff;">Esc</kbd> Cancel</span>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body" style="padding-bottom: 0">
@@ -1027,87 +1050,109 @@
                             </div>
                         </div>
                     </div>
-                    <div class="payment-amount">
-                        <h2>{{trans('file.grand total')}} <span id="grand-total">0.00</span></h2>
+                    <div class="payment-amount py-2 px-3 text-white text-right mb-2" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.12);">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-uppercase" style="letter-spacing: 1px; font-size: 13px; font-weight: 600; color: #94a3b8;">Total Payable Amount</span>
+                            <h2 class="mb-0 font-weight-bold" style="color: #38bdf8; font-family: 'Segoe UI', system-ui; font-size: 26px;">₹ <span id="grand-total">0.00</span></h2>
+                        </div>
                     </div>
-                    <div class="payment-options">
-                        <div class="column-5">
-                            <button style="background: #0984e3" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="credit-card-btn"><i class="fa fa-credit-card"></i> {{trans('file.Card')}}</button>
+                    <div class="payment-options mt-2">
+                        <div class="row no-gutters" style="gap: 6px;">
+                            <!-- UPI / QR Pay -->
+                            <div class="col" style="min-width: 120px;">
+                                <button type="button" class="btn btn-block text-white font-weight-bold shadow-sm" id="btn-quick-upi-pay" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border: none; padding: 10px 4px; border-radius: 8px;">
+                                    <i class="fa fa-qrcode mr-1"></i> UPI Pay <kbd style="background: rgba(0,0,0,0.25); font-size: 10px;">F4</kbd>
+                                </button>
+                            </div>
+                            <!-- Quick Cash -->
+                            <div class="col" style="min-width: 120px;">
+                                <button type="button" class="btn btn-block text-white font-weight-bold shadow-sm" id="btn-quick-cash-pay" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; padding: 10px 4px; border-radius: 8px;">
+                                    <i class="fa fa-money mr-1"></i> Cash <kbd style="background: rgba(0,0,0,0.25); font-size: 10px;">F2</kbd>
+                                </button>
+                            </div>
+                            <!-- Card Pay -->
+                            <div class="col" style="min-width: 105px;">
+                                <button type="button" class="btn btn-block text-white font-weight-bold shadow-sm payment-btn" data-toggle="modal" data-target="#add-payment" id="credit-card-btn" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: none; padding: 10px 4px; border-radius: 8px;">
+                                    <i class="fa fa-credit-card mr-1"></i> Card
+                                </button>
+                            </div>
+                            <!-- Finalize / Multiple Pay -->
+                            <div class="col" style="min-width: 105px;">
+                                <button type="button" class="btn btn-block text-white font-weight-bold shadow-sm payment-btn" data-toggle="modal" data-target="#add-payment" id="btn-finalize-pay" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; padding: 10px 4px; border-radius: 8px;">
+                                    <i class="fa fa-calculator mr-1"></i> Pay <kbd style="background: rgba(0,0,0,0.25); font-size: 10px;">F8</kbd>
+                                </button>
+                            </div>
                         </div>
-                        <div class="column-5">
-                            <button style="background: #00cec9" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="cash-btn"><i class="fa fa-money"></i> {{trans('file.Cash')}}</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #213170" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="paypal-btn"><i class="fa fa-paypal"></i> {{trans('file.PayPal')}}</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #e28d02" type="button" class="btn btn-custom" id="draft-btn"><i class="dripicons-flag"></i> {{trans('file.Draft')}}</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #fd7272" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="cheque-btn"><i class="fa fa-money"></i> {{trans('file.Cheque')}}</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #5f27cd" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="gift-card-btn"><i class="fa fa-credit-card-alt"></i> {{trans('file.Gift Card')}}</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #b33771" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="deposit-btn"><i class="fa fa-university"></i> {{trans('file.Deposit')}}</button>
-                        </div>
-                        @if($lims_reward_point_setting_data->is_active)
-                        <div class="column-5">
-                            <button style="background-color: #319398" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="point-btn"><i class="dripicons-rocket"></i> {{trans('file.Points')}}</button>
-                        </div>
-                        @endif
-                        <div class="column-5">
-                            <button style="background-color: #d63031;" type="button" class="btn btn-custom" id="cancel-btn" onclick="return confirmCancel()"><i class="fa fa-close"></i> {{trans('file.Cancel')}}</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #ffc107;" type="button" class="btn btn-custom" data-toggle="modal" data-target="#recentTransaction"><i class="dripicons-clock"></i> {{trans('file.Recent transaction')}}</button>
+                        <div class="row no-gutters mt-2" style="gap: 6px;">
+                            <div class="col">
+                                <button type="button" class="btn btn-block btn-sm btn-outline-secondary font-weight-bold" id="draft-btn" style="border-radius: 6px;">
+                                    <i class="dripicons-flag mr-1"></i> Hold / Draft
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-block btn-sm btn-outline-info font-weight-bold" data-toggle="modal" data-target="#recentTransaction" style="border-radius: 6px;">
+                                    <i class="dripicons-clock mr-1"></i> Recent Sales
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-block btn-sm btn-outline-danger font-weight-bold" id="cancel-btn" onclick="return confirmCancel()" style="border-radius: 6px;">
+                                    <i class="fa fa-trash-o mr-1"></i> Clear Cart <kbd style="background: rgba(0,0,0,0.1); font-size: 10px;">Esc</kbd>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- payment modal -->
             <div id="add-payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-                <div role="document" class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 id="exampleModalLabel" class="modal-title">{{trans('file.Finalize Sale')}}</h5>
-                            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
+                <div role="document" class="modal-dialog modal-lg">
+                    <div class="modal-content" style="border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
+                        <div class="modal-header bg-dark text-white py-2 px-3">
+                            <h5 id="exampleModalLabel" class="modal-title text-white"><i class="fa fa-calculator text-warning mr-2"></i> {{trans('file.Finalize Sale')}}</h5>
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="close text-white" style="opacity: 0.9;"><span aria-hidden="true">&times;</span></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body p-3">
                             <div class="row">
-                                <div class="col-md-10">
+                                <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-md-6 mt-1">
                                             <label>{{trans('file.Recieved Amount')}} *</label>
-                                            <input type="text" name="paying_amount" class="form-control numkey" required step="any">
+                                            <input type="text" name="paying_amount" class="form-control numkey font-weight-bold" required step="any" style="font-size: 16px;">
                                         </div>
                                         <div class="col-md-6 mt-1">
                                             <label>{{trans('file.Paying Amount')}} *</label>
-                                            <input type="text" name="paid_amount" class="form-control numkey"  step="any">
+                                            <input type="text" name="paid_amount" class="form-control numkey font-weight-bold" step="any" style="font-size: 16px;">
                                         </div>
-                                        <div class="col-md-6 mt-1">
+                                        <div class="col-md-6 mt-2">
                                             <label>{{trans('file.Change')}} : </label>
-                                            <p id="change" class="ml-2">0.00</p>
+                                            <span id="change" class="ml-2 font-weight-bold text-success" style="font-size: 18px;">₹ 0.00</span>
                                         </div>
-                                        <div class="col-md-6 mt-1">
+                                        <div class="col-md-6 mt-2">
                                             <input type="hidden" name="paid_by_id">
                                             <label>{{trans('file.Paid By')}}</label>
                                             <select name="paid_by_id_select" class="form-control selectpicker">
-                                                <option value="1">Cash</option>
-                                                <option value="2">Gift Card</option>
-                                                <option value="3">Credit Card</option>
-                                                <option value="4">Cheque</option>
+                                                <option value="1">💵 Cash</option>
+                                                <option value="11">⚡ UPI / QR Code</option>
+                                                <option value="3">💳 Credit / Debit Card</option>
+                                                <option value="2">🎁 Gift Card</option>
+                                                <option value="4">🏦 Cheque</option>
                                                 <option value="5">Paypal</option>
-                                                <option value="6">Deposit</option>
+                                                <option value="6">Customer Deposit</option>
                                                 @if($lims_reward_point_setting_data->is_active)
                                                 <option value="7">Points</option>
                                                 @endif
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-12 mt-3">
-                                            <div class="card-element form-control">
+                                        <!-- Inline UPI container inside add-payment modal -->
+                                        <div class="form-group col-md-12 upi-element text-center p-3 mt-2" style="display: none; background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0;">
+                                            <div class="font-weight-bold text-primary mb-2" style="font-size: 14px;"><i class="fa fa-qrcode mr-1"></i> Scan Dynamic UPI QR Code</div>
+                                            <div class="d-inline-block bg-white p-2 shadow-sm rounded mb-2" style="border: 2px dashed #6366f1;">
+                                                <img id="add-payment-upi-qr" src="" style="width: 170px; height: 170px; display: block;" alt="UPI QR" />
                                             </div>
+                                            <div class="text-muted" style="font-size: 12px;">Accepted: Google Pay • PhonePe • Paytm • BHIM • Amazon Pay</div>
+                                        </div>
+                                        <div class="form-group col-md-12 mt-2">
+                                            <div class="card-element form-control"></div>
                                             <div class="card-errors" role="alert"></div>
                                         </div>
                                         <div class="form-group col-md-12 gift-card">
@@ -1120,35 +1165,80 @@
                                             <input type="text" name="cheque_no" class="form-control">
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label>{{trans('file.Payment Note')}}</label>
-                                            <textarea id="payment_note" rows="2" class="form-control" name="payment_note"></textarea>
+                                            <label>{{trans('file.Payment Note')}} / UTR Ref</label>
+                                            <textarea id="payment_note" rows="2" class="form-control" name="payment_note" placeholder="Transaction Reference / Note"></textarea>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                       <div class="col-md-6 form-group">
-                                            <label>{{trans('file.Sale Note')}}</label>
-                                            <textarea rows="3" class="form-control" name="sale_note"></textarea>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>{{trans('file.Staff Note')}}</label>
-                                            <textarea rows="3" class="form-control" name="staff_note"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <button id="submit-btn" type="button" class="btn btn-primary">{{trans('file.submit')}}</button>
+                                    <div class="mt-2">
+                                        <button id="submit-btn" type="button" class="btn btn-success btn-lg px-4 font-weight-bold shadow-sm" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">
+                                            <i class="fa fa-check-circle mr-1"></i> {{trans('file.submit')}} <kbd style="background: rgba(0,0,0,0.25); color: #fff; font-size: 11px; margin-left: 6px;">Enter ↵</kbd>
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="col-md-2 qc" data-initial="1">
-                                    <h4><strong>{{trans('file.Quick Cash')}}</strong></h4>
-                                    <button class="btn btn-block btn-primary qc-btn sound-btn" data-amount="10" type="button">10</button>
-                                    <button class="btn btn-block btn-primary qc-btn sound-btn" data-amount="20" type="button">20</button>
-                                    <button class="btn btn-block btn-primary qc-btn sound-btn" data-amount="50" type="button">50</button>
-                                    <button class="btn btn-block btn-primary qc-btn sound-btn" data-amount="100" type="button">100</button>
-                                    <button class="btn btn-block btn-primary qc-btn sound-btn" data-amount="500" type="button">500</button>
-                                    <button class="btn btn-block btn-primary qc-btn sound-btn" data-amount="1000" type="button">1000</button>
-                                    <button class="btn btn-block btn-danger qc-btn sound-btn" data-amount="0" type="button">{{trans('file.Clear')}}</button>
+                                <div class="col-md-3 qc" data-initial="1">
+                                    <h5 class="font-weight-bold text-dark mb-2"><strong>INR Quick Cash</strong></h5>
+                                    <button class="btn btn-block btn-outline-primary qc-btn sound-btn mb-1 font-weight-bold" data-amount="50" type="button">₹ 50</button>
+                                    <button class="btn btn-block btn-outline-primary qc-btn sound-btn mb-1 font-weight-bold" data-amount="100" type="button">₹ 100</button>
+                                    <button class="btn btn-block btn-outline-primary qc-btn sound-btn mb-1 font-weight-bold" data-amount="200" type="button">₹ 200</button>
+                                    <button class="btn btn-block btn-outline-primary qc-btn sound-btn mb-1 font-weight-bold" data-amount="500" type="button">₹ 500</button>
+                                    <button class="btn btn-block btn-outline-primary qc-btn sound-btn mb-1 font-weight-bold" data-amount="2000" type="button">₹ 2000</button>
+                                    <button class="btn btn-block btn-success qc-exact-btn sound-btn mb-1 font-weight-bold" type="button"><i class="fa fa-check mr-1"></i> Exact ₹</button>
+                                    <button class="btn btn-block btn-danger qc-btn sound-btn font-weight-bold" data-amount="0" type="button">{{trans('file.Clear')}}</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Dedicated UPI Payment Modal -->
+            <div id="upi-payment-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade text-left">
+                <div role="document" class="modal-dialog modal-md">
+                    <div class="modal-content" style="border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: none;">
+                        <div class="modal-header text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); padding: 14px 18px;">
+                            <div>
+                                <h5 class="modal-title font-weight-bold mb-0 text-white" style="font-size: 16px;">
+                                    <i class="fa fa-qrcode mr-2"></i> UPI Instant QR Payment
+                                </h5>
+                                <p class="mb-0 text-white-50" style="font-size: 12px;">Scan with GPay, PhonePe, Paytm, BHIM or any UPI App</p>
+                            </div>
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="close text-white" style="opacity: 0.9; font-size: 22px;"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body p-4 text-center">
+                            <!-- Amount Banner -->
+                            <div class="p-3 mb-3" style="background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+                                <div class="text-muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Payable Amount</div>
+                                <div class="upi-payable-amount font-weight-bold text-success" style="font-size: 30px; font-family: 'Segoe UI', system-ui;">₹ <span id="upi-display-total">0.00</span></div>
+                            </div>
+
+                            <!-- Live Generated Dynamic QR Code -->
+                            <div class="qr-code-wrapper p-3 d-inline-block bg-white shadow-sm mb-3" style="border-radius: 12px; border: 2px dashed #6366f1;">
+                                <img id="upi-dynamic-qr-img" src="" alt="UPI QR Code" style="width: 210px; height: 210px; display: block;" />
+                                <div class="mt-2 font-weight-bold text-primary" style="font-size: 11px;">
+                                    <i class="fa fa-shield mr-1"></i> NPCI Verified Merchant UPI
+                                </div>
+                            </div>
+
+                            <!-- Supported Apps Badges -->
+                            <div class="d-flex justify-content-center align-items-center mb-3" style="gap: 6px; flex-wrap: wrap;">
+                                <span class="badge badge-light border px-2 py-1" style="font-size: 11px; color: #1e3a8a;"><i class="fa fa-google mr-1"></i> Google Pay</span>
+                                <span class="badge badge-light border px-2 py-1" style="font-size: 11px; color: #5b21b6;"><i class="fa fa-mobile mr-1"></i> PhonePe</span>
+                                <span class="badge badge-light border px-2 py-1" style="font-size: 11px; color: #0284c7;"><i class="fa fa-money mr-1"></i> Paytm</span>
+                                <span class="badge badge-light border px-2 py-1" style="font-size: 11px; color: #047857;"><i class="fa fa-check-circle mr-1"></i> BHIM</span>
+                                <span class="badge badge-light border px-2 py-1" style="font-size: 11px; color: #b45309;"><i class="fa fa-amazon mr-1"></i> Amazon Pay</span>
+                            </div>
+
+                            <!-- Transaction UTR Ref Input -->
+                            <div class="form-group text-left mb-3">
+                                <label class="font-weight-bold text-dark" style="font-size: 12px;">
+                                    <i class="fa fa-pencil text-muted mr-1"></i> UPI Reference / UTR Number (Optional)
+                                </label>
+                                <input type="text" id="upi_utr_ref" class="form-control" placeholder="e.g. 429381048291 (last 12 digits)" autocomplete="off" style="border-radius: 8px; font-size: 13px; font-family: monospace;" />
+                            </div>
+
+                            <!-- Confirm Button with Enter Shortcut -->
+                            <button type="button" class="btn btn-success btn-lg btn-block font-weight-bold shadow-sm py-2" id="btn-confirm-upi-submit" style="border-radius: 10px; font-size: 15px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">
+                                <i class="fa fa-check-circle mr-1"></i> Confirm Payment Received & Print Bill <kbd style="background: rgba(0,0,0,0.2); color: #fff; font-size: 11px; margin-left: 6px;">Enter ↵</kbd>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -2739,8 +2829,203 @@ $("#draft-btn").on("click",function(){
         $('.payment-form').submit();
 });
 
-$("#submit-btn").on("click", function() {
+function generateUpiQrUrl(amount) {
+    var upiVpa = 'posmerchant@upi';
+    var merchantName = encodeURIComponent('SalePro POS Store');
+    var val = parseFloat(amount);
+    if (isNaN(val) || val <= 0) {
+        val = parseFloat($('#grand-total').text()) || 0.00;
+    }
+    var upiUrl = 'upi://pay?pa=' + encodeURIComponent(upiVpa) + '&pn=' + merchantName + '&am=' + val.toFixed(2) + '&cu=INR';
+    return 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(upiUrl);
+}
+
+function processPaymentFormSubmit() {
+    var rownumber = $('table.order-list tbody tr:last').index();
+    if (rownumber < 0) {
+        alert("Please insert product to order table!");
+        return false;
+    }
+    var grandTotal = parseFloat($('#grand-total').text()) || 0;
+    var paidAmt = parseFloat($('input[name="paid_amount"]').val());
+    var payingAmt = parseFloat($('input[name="paying_amount"]').val());
+
+    if (isNaN(paidAmt) || paidAmt <= 0) {
+        paidAmt = grandTotal;
+        $('input[name="paid_amount"]').val(grandTotal.toFixed(2));
+    }
+    if (isNaN(payingAmt) || payingAmt <= 0) {
+        payingAmt = paidAmt;
+        $('input[name="paying_amount"]').val(payingAmt.toFixed(2));
+    }
+
+    $('input[name="paid_by_id"]').val($('select[name="paid_by_id_select"]').val());
+    $('input[name="order_tax_rate"]').val($('select[name="order_tax_rate_select"]').val());
+
     $('.payment-form').submit();
+    return true;
+}
+
+$("#submit-btn").on("click", function(e) {
+    e.preventDefault();
+    processPaymentFormSubmit();
+});
+
+// Quick Cash Pay Button (F2)
+$("#btn-quick-cash-pay").on("click", function(e) {
+    e.preventDefault();
+    var rownumber = $('table.order-list tbody tr:last').index();
+    if (rownumber < 0) {
+        alert("Please insert product to order table!");
+        return;
+    }
+    var total = parseFloat($('#grand-total').text()) || 0;
+    if (total <= 0) {
+        alert("Grand total is 0.00! Please add products.");
+        return;
+    }
+    var audio = $("#mysoundclip2")[0];
+    if (audio) { audio.play(); }
+
+    $('input[name="paying_amount"]').val(total.toFixed(2));
+    $('input[name="paid_amount"]').val(total.toFixed(2));
+    $('select[name="paid_by_id_select"]').val('1');
+    $('input[name="paid_by_id"]').val('1');
+    $('input[name="order_tax_rate"]').val($('select[name="order_tax_rate_select"]').val());
+
+    $('.payment-form').submit();
+});
+
+// Quick UPI Pay Button (F4)
+$("#btn-quick-upi-pay").on("click", function(e) {
+    e.preventDefault();
+    var rownumber = $('table.order-list tbody tr:last').index();
+    if (rownumber < 0) {
+        alert("Please insert product to order table!");
+        return;
+    }
+    var total = parseFloat($('#grand-total').text()) || 0;
+    if (total <= 0) {
+        alert("Grand total is 0.00! Please add products.");
+        return;
+    }
+    var audio = $("#mysoundclip2")[0];
+    if (audio) { audio.play(); }
+
+    $('#upi-display-total').text(total.toFixed(2));
+    $('#upi-dynamic-qr-img').attr('src', generateUpiQrUrl(total));
+    $('#upi_utr_ref').val('');
+    $('#upi-payment-modal').modal('show');
+    setTimeout(function() {
+        $('#upi_utr_ref').focus();
+    }, 400);
+});
+
+// Confirm UPI Payment and Print Receipt
+$("#btn-confirm-upi-submit").on("click", function(e) {
+    e.preventDefault();
+    var rownumber = $('table.order-list tbody tr:last').index();
+    if (rownumber < 0) {
+        alert("Please insert product to order table!");
+        $('#upi-payment-modal').modal('hide');
+        return;
+    }
+    var total = parseFloat($('#grand-total').text()) || 0;
+    if (total <= 0) {
+        alert("Grand total is 0.00! Please add products.");
+        return;
+    }
+
+    $('input[name="paying_amount"]').val(total.toFixed(2));
+    $('input[name="paid_amount"]').val(total.toFixed(2));
+    $('select[name="paid_by_id_select"]').val('11');
+    $('input[name="paid_by_id"]').val('11');
+    $('input[name="order_tax_rate"]').val($('select[name="order_tax_rate_select"]').val());
+
+    var utr = $.trim($('#upi_utr_ref').val());
+    if (utr) {
+        var existingNote = $('#payment_note').val() || '';
+        $('#payment_note').val((existingNote ? existingNote + " | " : "") + "UPI Ref: " + utr);
+    }
+
+    $('#upi-payment-modal').modal('hide');
+    $('.payment-form').submit();
+});
+
+// Exact Cash Tender button
+$(document).on('click', '.qc-exact-btn', function(e) {
+    e.preventDefault();
+    var grandTotal = parseFloat($('#grand-total').text()) || 0;
+    $('input[name="paying_amount"]').val(grandTotal.toFixed(2));
+    change(grandTotal.toFixed(2), $('input[name="paid_amount"]').val());
+});
+
+// Enter keypress inside Add Payment inputs submits the sale
+$('#add-payment').on('keypress', 'input', function(e) {
+    if (e.which === 13) {
+        e.preventDefault();
+        processPaymentFormSubmit();
+    }
+});
+
+// Enter keypress inside UPI modal triggers confirmation
+$('#upi-payment-modal').on('keypress', 'input', function(e) {
+    if (e.which === 13) {
+        e.preventDefault();
+        $('#btn-confirm-upi-submit').trigger('click');
+    }
+});
+
+// Global POS Hotkeys (F1, F2, F4, F8, Esc, Enter)
+$(document).on('keydown', function(e) {
+    var tag = e.target.tagName ? e.target.tagName.toLowerCase() : '';
+
+    // F1: Focus Search Barcode/Product
+    if (e.which === 112) { // F1
+        e.preventDefault();
+        $('#lims_productcodeSearch').focus().select();
+        return;
+    }
+    // F2: Quick Cash Pay
+    if (e.which === 113) { // F2
+        e.preventDefault();
+        $('#btn-quick-cash-pay').trigger('click');
+        return;
+    }
+    // F4: UPI Instant Pay
+    if (e.which === 115) { // F4
+        e.preventDefault();
+        $('#btn-quick-upi-pay').trigger('click');
+        return;
+    }
+    // F8: Finalize / Open Payment Modal
+    if (e.which === 119) { // F8
+        e.preventDefault();
+        $('#btn-finalize-pay').trigger('click');
+        return;
+    }
+    // Escape: Close active modals
+    if (e.which === 27) { // Escape
+        if ($('.modal.show, .modal.in').length) {
+            $('.modal.show, .modal.in').modal('hide');
+        }
+        return;
+    }
+    // Enter key submit handler when payment modals are visible
+    if (e.which === 13) {
+        if ($('#upi-payment-modal').hasClass('show') || $('#upi-payment-modal').is(':visible')) {
+            e.preventDefault();
+            $('#btn-confirm-upi-submit').trigger('click');
+            return;
+        }
+        if ($('#add-payment').hasClass('show') || $('#add-payment').is(':visible')) {
+            if (tag !== 'textarea') {
+                e.preventDefault();
+                processPaymentFormSubmit();
+                return;
+            }
+        }
+    }
 });
 
 $("#gift-card-btn").on("click",function() {
@@ -2799,16 +3084,26 @@ $('select[name="paid_by_id_select"]').on("change", function() {
     $(".payment-form").off("submit");
     if(id == 2) {
         $('div.qc').hide();
+        $('.upi-element').hide();
         giftCard();
     }
     else if (id == 3) {
         $('div.qc').hide();
+        $('.upi-element').hide();
         creditCard();
     } else if (id == 4) {
         $('div.qc').hide();
+        $('.upi-element').hide();
         cheque();
+    } else if (id == 11) {
+        hide();
+        $('div.qc').hide();
+        var currentBill = $('input[name="paid_amount"]').val() || $('#grand-total').text() || '0.00';
+        $('#add-payment-upi-qr').attr('src', generateUpiQrUrl(currentBill));
+        $('.upi-element').show();
     } else {
         hide();
+        $('.upi-element').hide();
         if(id == 1)
             $('div.qc').show();
         else if(id == 6) {
@@ -2835,8 +3130,9 @@ $('#add-payment input[name="paying_amount"]').on("input", function() {
 });
 
 $('input[name="paid_amount"]').on("input", function() {
-    if( $(this).val() > parseFloat($('input[name="paying_amount"]').val()) ) {
-        alert('Paying amount cannot be bigger than recieved amount');
+    var payingVal = parseFloat($('input[name="paying_amount"]').val());
+    if(!isNaN(payingVal) && payingVal > 0 && parseFloat($(this).val()) > payingVal) {
+        alert('Paying amount cannot be bigger than received amount');
         $(this).val('');
     }
     else if( $(this).val() > parseFloat($('#grand-total').text()) ){
@@ -2854,6 +3150,10 @@ $('input[name="paid_amount"]').on("input", function() {
     else if(id == 6){
         if( $('input[name="paid_amount"]').val() > deposit[$('#customer_id').val()] )
             alert('Amount exceeds customer deposit! Customer deposit : '+ deposit[$('#customer_id').val()]);
+    }
+    else if(id == 11) {
+        var currentBill = $(this).val() || $('#grand-total').text();
+        $('#add-payment-upi-qr').attr('src', generateUpiQrUrl(currentBill));
     }
 });
 
@@ -3338,6 +3638,7 @@ function hide() {
     $(".card-errors").hide();
     $(".cheque").hide();
     $(".gift-card").hide();
+    $(".upi-element").hide();
     $('input[name="cheque_no"]').attr('required', false);
 }
 
