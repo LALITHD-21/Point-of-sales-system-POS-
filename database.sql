@@ -272,7 +272,8 @@ CREATE TABLE `currencies` (
 
 INSERT INTO `currencies` (`id`, `name`, `code`, `exchange_rate`, `created_at`, `updated_at`) VALUES
 (1, 'US Dollar', 'USD', 1, '2020-11-01 00:22:58', '2020-11-01 00:34:55'),
-(2, 'Euro', 'Euro', 0.85, '2020-11-01 01:29:12', '2020-11-10 23:15:34');
+(2, 'Euro', 'Euro', 0.85, '2020-11-01 01:29:12', '2020-11-10 23:15:34'),
+(3, 'Indian Rupee', 'INR', 1, '2026-09-24 22:40:38', '2026-09-24 22:40:38');
 
 -- --------------------------------------------------------
 
@@ -582,7 +583,7 @@ CREATE TABLE `general_settings` (
 --
 
 INSERT INTO `general_settings` (`id`, `site_title`, `site_logo`, `is_rtl`, `currency`, `staff_access`, `date_format`, `developed_by`, `invoice_format`, `state`, `theme`, `created_at`, `updated_at`, `currency_position`) VALUES
-(1, 'SalePro', '20210530062516.png', 0, '1', 'own', 'd/m/Y', 'TECH_BOY_LALITH', 'standard', 1, 'default.css', '2018-07-06 06:13:11', '2021-11-14 07:22:32', 'prefix');
+(1, 'SalePro', '20210530062516.png', 0, '3', 'own', 'd/m/Y', 'TECH_BOY_LALITH', 'standard', 1, 'default.css', '2018-07-06 06:13:11', '2021-11-14 07:22:32', 'prefix');
 
 -- --------------------------------------------------------
 
