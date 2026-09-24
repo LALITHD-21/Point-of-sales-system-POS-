@@ -843,23 +843,56 @@
                                     <div class="col-md-12">
                                         <div class="search-box form-group" style="display: flex; gap: 8px;">
                                             <input type="text" name="product_code_name" id="lims_productcodeSearch" placeholder="Scan barcode or type product name/code" class="form-control" style="flex: 1;" />
-                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#cameraModal" style="white-space: nowrap;"><i class="fa fa-camera"></i> Camera Scan</button>
+                                            <button type="button" class="btn btn-info" id="cameraScanBtn" style="white-space: nowrap; font-weight: 500;"><i class="fa fa-camera mr-1"></i> Camera Scan</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div id="cameraModal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade text-left">
-                                    <div role="document" class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title"><i class="fa fa-camera"></i> Live Barcode & QR Scanner</h5>
-                                                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
+                                    <div role="document" class="modal-dialog modal-md">
+                                        <div class="modal-content" style="border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                                            <div class="modal-header bg-dark text-white py-2 px-3" style="display: flex; align-items: center; justify-content: space-between;">
+                                                <h5 class="modal-title text-white" style="font-size: 15px; margin: 0;"><i class="fa fa-camera text-info mr-1"></i> Live Barcode & QR Scanner</h5>
+                                                <button type="button" data-dismiss="modal" aria-label="Close" class="close text-white" style="opacity: 0.9; margin: 0; padding: 0;"><span aria-hidden="true">&times;</span></button>
                                             </div>
-                                            <div class="modal-body text-center">
-                                                <div id="camera-reader" style="width: 100%; min-height: 260px; border-radius: 8px; overflow: hidden; background: #000;"></div>
-                                                <p class="text-muted mt-2" style="font-size: 12px;"><i class="fa fa-info-circle"></i> Point your camera at any product barcode or QR code.</p>
+                                            <div class="modal-body p-3">
+                                                <!-- Status Alert message -->
+                                                <div id="camera-status-alert" class="alert alert-info py-2 px-3 mb-2" style="font-size: 13px; display: none;"></div>
+
+                                                <!-- Camera device selection & Switch controls -->
+                                                <div id="camera-select-wrapper" class="mb-2" style="display: none;">
+                                                    <div class="d-flex align-items-center" style="gap: 8px;">
+                                                        <span class="text-muted" style="font-size: 12px; white-space: nowrap;"><i class="fa fa-video-camera"></i> Camera:</span>
+                                                        <select id="camera-select-dropdown" class="form-control form-control-sm" style="font-size: 12px; height: 32px;"></select>
+                                                        <button type="button" id="btn-switch-camera" class="btn btn-sm btn-outline-primary" style="white-space: nowrap; height: 32px; font-size: 12px;"><i class="fa fa-refresh"></i> Switch</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Scanner Viewport with Viewfinder Box & Laser Overlay -->
+                                                <div class="scanner-viewport-box" style="position: relative; width: 100%; max-width: 460px; margin: 0 auto; background: #000; border-radius: 10px; overflow: hidden; min-height: 260px; display: flex; align-items: center; justify-content: center;">
+                                                    <div id="camera-reader" style="width: 100%;"></div>
+                                                    <div id="scanner-laser" style="display: none; position: absolute; left: 6%; right: 6%; height: 3px; background: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 18px #22c55e; animation: scannerLaserMove 2s infinite ease-in-out; pointer-events: none; z-index: 10;"></div>
+                                                </div>
+
+                                                <!-- Step-by-Step Permission Helper Guide (shown if blocked) -->
+                                                <div id="camera-permission-guide" class="card mt-3 border-danger" style="display: none; background: #fff5f5;">
+                                                    <div class="card-body py-2 px-3">
+                                                        <h6 class="text-danger mb-1 font-weight-bold" style="font-size: 13px;"><i class="fa fa-exclamation-triangle"></i> Camera Permission Blocked</h6>
+                                                        <p class="mb-1 text-dark" style="font-size: 12px;">Your browser blocked camera permission. To enable it:</p>
+                                                        <ol class="mb-2 pl-3 text-secondary" style="font-size: 12px; line-height: 1.5;">
+                                                            <li>Click the <strong>Lock (🔒)</strong> or <strong>Camera (🎥)</strong> icon next to the URL at the top.</li>
+                                                            <li>Set <strong>Camera</strong> to <strong>Allow</strong>.</li>
+                                                            <li>Click <strong>"Allow & Start Camera"</strong> below.</li>
+                                                        </ol>
+                                                        <button type="button" id="btn-request-permission-again" class="btn btn-danger btn-sm btn-block"><i class="fa fa-camera mr-1"></i> Allow & Start Camera</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center mt-2">
+                                                    <small class="text-muted" style="font-size: 11px;"><i class="fa fa-info-circle text-info"></i> Point camera steadily at barcode or QR code. Scanned items auto-add with Universal Serial Number.</small>
+                                                </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <div class="modal-footer py-2 px-3 bg-light">
+                                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
@@ -2834,6 +2867,12 @@ function productSearch(data) {
                     checkQuantity(String(qty), true);
                     flag = 0;
                     localStorage.setItem("tbody-id", $("table.order-list tbody").html());
+
+                    var $existingRow = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')');
+                    $existingRow.css('background-color', '#e0f2fe');
+                    setTimeout(function() {
+                        $existingRow.css('background-color', '');
+                    }, 1200);
                 }
             });
             $("input[name='product_code_name']").val('');
@@ -2849,7 +2888,7 @@ function addNewProduct(data){
     var cols = '';
     temp_unit_name = (data[6]).split(',');
     pos = product_code.indexOf(data[1]);
-    cols += '<td class="col-sm-2 product-title"><button type="button" class="edit-product btn btn-link" data-toggle="modal" data-target="#editModal"><strong>' + data[0] + '</strong></button><br>' + data[1] + '<p>In Stock: <span class="in-stock"></span></p></td>';
+    cols += '<td class="col-sm-2 product-title"><button type="button" class="edit-product btn btn-link p-0 text-left font-weight-bold" data-toggle="modal" data-target="#editModal" style="color: #1e293b; font-size: 13px; line-height: 1.3;"><strong>' + data[0] + '</strong></button><div class="product-serial-badge mt-1"><span class="badge badge-primary px-2 py-1" style="font-family: \'SFMono-Regular\', Menlo, Monaco, Consolas, \'Liberation Mono\', monospace; font-size: 11px; letter-spacing: 0.5px; background-color: #0284c7; border-radius: 4px; display: inline-block;"><i class="fa fa-barcode mr-1"></i> UPC / S/N: ' + data[1] + '</span></div><p class="mb-0 mt-1 text-muted" style="font-size: 11px;">In Stock: <span class="in-stock font-weight-bold text-success"></span></p></td>';
     if(data[12]) {
         cols += '<td class="col-sm-2"><input type="text" class="form-control batch-no" value="'+batch_no[pos]+'" required/> <input type="hidden" class="product-batch-id" name="product_batch_id[]" value="'+product_batch_id[pos]+'"/> </td>';
     }
@@ -2882,6 +2921,11 @@ function addNewProduct(data){
     }
     else
         $("table.order-list tbody").prepend(newRow);
+
+    newRow.css('background-color', '#e0f2fe');
+    setTimeout(function() {
+        newRow.css('background-color', '');
+    }, 1200);
 
     rowindex = newRow.index();
 
@@ -2942,8 +2986,9 @@ function edit(){
         $("#editModal .modal-element").append(htmlText);
     }
 
-    var row_product_name_code = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('td:nth-child(1)').text();
-    $('#modal_header').text(row_product_name_code);
+    var row_product_name = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.edit-product strong').text() || $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.edit-product').text();
+    var row_product_code = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.product-code').val();
+    $('#modal_header').text(row_product_name + ' [UPC/SN: ' + row_product_code + ']');
 
     var qty = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val();
     $('input[name="edit_qty"]').val(qty);
@@ -3360,50 +3405,230 @@ function playScanBeep() {
     } catch(e) {}
 }
 
-// Live Camera Barcode & QR Scanner Integration (using Html5QrcodeScanner for 100% device compatibility)
-var html5QrcodeScanner = null;
+// Live Camera Barcode & QR Scanner Integration (Direct Html5Qrcode Engine)
+var html5QrCode = null;
+var isScanningActive = false;
+var availableCameraList = [];
+var activeCameraDeviceId = null;
 
 function onCameraScanSuccess(decodedText, decodedResult) {
     playScanBeep();
     $('#cameraModal').modal('hide');
-    if (html5QrcodeScanner) {
-        html5QrcodeScanner.clear().catch(function(){});
-        html5QrcodeScanner = null;
-    }
+    stopActiveCameraScanner();
     $('#lims_productcodeSearch').val(decodedText);
     productSearch(decodedText);
 }
 
 function onCameraScanFailure(error) {
-    // Handled silently per frame
+    // Handled silently per video frame
 }
 
-$('#cameraModal').on('shown.bs.modal', function () {
+function stopActiveCameraScanner(callback) {
+    $('#scanner-laser').hide();
+    if (html5QrCode && isScanningActive) {
+        isScanningActive = false;
+        html5QrCode.stop().then(function() {
+            html5QrCode.clear();
+            if (callback) callback();
+        }).catch(function(err) {
+            console.warn("Camera stop error:", err);
+            if (callback) callback();
+        });
+    } else {
+        if (callback) callback();
+    }
+}
+
+function startScanningSession(targetCameraId) {
+    $('#camera-status-alert').attr('class', 'alert alert-info py-2 px-3 mb-2').html('<i class="fa fa-spinner fa-spin mr-1"></i> Accessing camera... Please click <b>"Allow"</b> if prompted by browser.').show();
+    $('#camera-permission-guide').hide();
     $('#camera-reader').empty();
-    try {
-        html5QrcodeScanner = new Html5QrcodeScanner(
-            "camera-reader",
-            {
-                fps: 15,
-                qrbox: { width: 280, height: 160 },
-                rememberLastUsedCamera: true
-            },
-            false
-        );
-        html5QrcodeScanner.render(onCameraScanSuccess, onCameraScanFailure);
-    } catch(err) {
-        console.error("Scanner init error:", err);
-        $('#camera-reader').html('<div class="alert alert-warning">Unable to initialize camera scanner. Please ensure camera permissions are allowed in your browser address bar.</div>');
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        $('#camera-status-alert').attr('class', 'alert alert-danger py-2 px-3 mb-2').html('<i class="fa fa-exclamation-triangle mr-1"></i> Camera scanning requires modern browser on <code>localhost</code> or <code>https://</code>.').show();
+        return;
+    }
+
+    // Step 1: Explicitly request camera permission directly to trigger browser permission dialog
+    var constraints = { video: { facingMode: { ideal: "environment" } } };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+    .catch(function(err) {
+        // Fallback for laptops or single front camera
+        return navigator.mediaDevices.getUserMedia({ video: true });
+    })
+    .then(function(testStream) {
+        // Permission successfully granted by user!
+        // Release initial test stream immediately so camera is free for Html5Qrcode
+        testStream.getTracks().forEach(function(track) {
+            track.stop();
+        });
+
+        // Enumerate video devices
+        return Html5Qrcode.getCameras();
+    })
+    .then(function(cameras) {
+        availableCameraList = cameras || [];
+        if (availableCameraList.length === 0) {
+            $('#camera-status-alert').attr('class', 'alert alert-warning py-2 px-3 mb-2').html('<i class="fa fa-exclamation-triangle mr-1"></i> No camera detected on this computer. Please connect a webcam or barcode gun.').show();
+            return;
+        }
+
+        // Populate camera dropdown
+        var $dropdown = $('#camera-select-dropdown');
+        $dropdown.empty();
+        var preferredId = availableCameraList[0].id;
+
+        availableCameraList.forEach(function(cam, idx) {
+            var label = cam.label || ('Camera ' + (idx + 1));
+            $dropdown.append($('<option>', { value: cam.id, text: label }));
+            var lower = label.toLowerCase();
+            if (lower.indexOf('back') !== -1 || lower.indexOf('rear') !== -1 || lower.indexOf('environment') !== -1) {
+                preferredId = cam.id;
+            }
+        });
+
+        if (availableCameraList.length > 1) {
+            $('#camera-select-wrapper').show();
+        } else {
+            $('#camera-select-wrapper').hide();
+        }
+
+        var selectedCameraId = targetCameraId || preferredId;
+        $dropdown.val(selectedCameraId);
+        activeCameraDeviceId = selectedCameraId;
+
+        launchHtml5Scanner(selectedCameraId);
+    })
+    .catch(function(err) {
+        console.warn("Camera permission or initialization error:", err);
+        $('#camera-status-alert').hide();
+        $('#scanner-laser').hide();
+        $('#camera-permission-guide').show();
+        $('#camera-reader').html('<div class="py-4 text-center text-white"><i class="fa fa-video-camera fa-3x text-danger mb-2"></i><br><span class="text-danger font-weight-bold" style="font-size: 15px;">Camera Permission Not Granted</span><p class="text-muted mt-1" style="font-size: 12px;">Browser blocked camera access or no permission was given.</p></div>');
+    });
+}
+
+function launchHtml5Scanner(cameraId) {
+    stopActiveCameraScanner(function() {
+        $('#camera-reader').empty();
+        $('#camera-status-alert').attr('class', 'alert alert-success py-2 px-3 mb-2').html('<i class="fa fa-video-camera mr-1"></i> Camera online. Center barcode inside the frame...').show();
+
+        try {
+            html5QrCode = new Html5Qrcode("camera-reader");
+            var scanConfig = {
+                fps: 20,
+                qrbox: function(viewfinderWidth, viewfinderHeight) {
+                    var minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+                    return {
+                        width: Math.floor(minEdge * 0.85),
+                        height: Math.floor(minEdge * 0.55)
+                    };
+                },
+                aspectRatio: 1.333334
+            };
+
+            var cameraSource = cameraId ? { deviceId: { exact: cameraId } } : { facingMode: "environment" };
+
+            html5QrCode.start(
+                cameraSource,
+                scanConfig,
+                onCameraScanSuccess,
+                onCameraScanFailure
+            ).then(function() {
+                isScanningActive = true;
+                $('#scanner-laser').show();
+                setTimeout(function() {
+                    $('#camera-status-alert').slideUp();
+                }, 2000);
+            }).catch(function(startErr) {
+                console.warn("Exact device start failed, falling back to facingMode user:", startErr);
+                html5QrCode.start(
+                    { facingMode: "user" },
+                    scanConfig,
+                    onCameraScanSuccess,
+                    onCameraScanFailure
+                ).then(function() {
+                    isScanningActive = true;
+                    $('#scanner-laser').show();
+                }).catch(function(err2) {
+                    $('#camera-status-alert').attr('class', 'alert alert-danger py-2 px-3 mb-2').html('Could not start camera feed: ' + (err2.message || err2)).show();
+                });
+            });
+        } catch(e) {
+            console.error("Html5Qrcode exception:", e);
+            $('#camera-status-alert').attr('class', 'alert alert-danger py-2 px-3 mb-2').html('Scanner error: ' + e.message).show();
+        }
+    });
+}
+
+// User-gesture click handler for immediate camera permission prompt
+$('#cameraScanBtn').on('click', function(e) {
+    e.preventDefault();
+    $('#cameraModal').modal('show');
+    startScanningSession();
+});
+
+// Re-request permission button click handler
+$('#btn-request-permission-again').on('click', function() {
+    startScanningSession();
+});
+
+// Switch camera button handler
+$('#btn-switch-camera').on('click', function() {
+    var selectedId = $('#camera-select-dropdown').val();
+    if (selectedId) {
+        launchHtml5Scanner(selectedId);
     }
 });
 
-$('#cameraModal').on('hidden.bs.modal', function () {
-    if (html5QrcodeScanner) {
-        html5QrcodeScanner.clear().catch(function(){});
-        html5QrcodeScanner = null;
+$('#camera-select-dropdown').on('change', function() {
+    var selectedId = $(this).val();
+    if (selectedId) {
+        launchHtml5Scanner(selectedId);
     }
-    $('#camera-reader').empty();
+});
+
+// Cleanup when modal closes
+$('#cameraModal').on('hidden.bs.modal', function () {
+    stopActiveCameraScanner();
+    $('#camera-status-alert').hide();
+    $('#camera-permission-guide').hide();
+});
+
+// Enter keypress on product search input for instant barcode gun scan
+$('#lims_productcodeSearch').on('keypress', function(e) {
+    if (e.which === 13) {
+        e.preventDefault();
+        var code = $(this).val().trim();
+        if (code) {
+            productSearch(code);
+        }
+    }
 });
 </script>
+<style>
+@keyframes scannerLaserMove {
+    0% { top: 12%; opacity: 0.9; }
+    50% { top: 88%; opacity: 1; }
+    100% { top: 12%; opacity: 0.9; }
+}
+#camera-reader video {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 8px;
+    object-fit: cover;
+}
+#camera-reader canvas {
+    max-width: 100%;
+}
+.product-serial-badge .badge {
+    font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+</style>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 @endpush

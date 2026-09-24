@@ -127,7 +127,8 @@
                 ?>
                 <tr>
                     <td colspan="2">
-                        {{$product_name}}
+                        <strong>{{$product_name}}</strong>
+                        <br><span style="font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; color: #1e293b;">[UPC / S/N: {{$lims_product_data->code}}]</span>
                         <br>{{$product_sale_data->qty}} x {{number_format((float)($product_sale_data->total / $product_sale_data->qty), 2, '.', '')}}
 
                         @if($product_sale_data->tax_rate)
