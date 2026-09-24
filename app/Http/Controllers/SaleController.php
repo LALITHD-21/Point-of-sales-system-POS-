@@ -1183,21 +1183,68 @@ class SaleController extends Controller
     public function limsProductSearch(Request $request)
     {
         $todayDate = date('Y-m-d');
-        $product_code = explode("(", $request['data']);
-        $product_code[0] = rtrim($product_code[0], " ");
+        $rawQuery = trim($request['data']);
         $product_variant_id = null;
+        $lims_product_data = null;
+
+        // Extract possible code and name parts if formatted like "Code (Name)" or "Name (Code)"
+        $codeCandidate = $rawQuery;
+        $nameCandidate = null;
+        if (strpos($rawQuery, '(') !== false) {
+            $parts = explode("(", $rawQuery);
+            $codeCandidate = rtrim($parts[0], " ");
+            if (isset($parts[1])) {
+                $nameCandidate = rtrim($parts[1], ") ");
+            }
+        }
+
+        // 1. Try finding by code
         $lims_product_data = Product::where([
-            ['code', $product_code[0]],
+            ['code', $codeCandidate],
             ['is_active', true]
         ])->first();
+
+        // 2. Try finding by variant item_code
         if(!$lims_product_data) {
             $lims_product_data = Product::join('product_variants', 'products.id', 'product_variants.product_id')
                 ->select('products.*', 'product_variants.id as product_variant_id', 'product_variants.item_code', 'product_variants.additional_price')
                 ->where([
-                    ['product_variants.item_code', $product_code[0]],
+                    ['product_variants.item_code', $codeCandidate],
                     ['products.is_active', true]
                 ])->first();
-            $product_variant_id = $lims_product_data->product_variant_id;
+            if ($lims_product_data) {
+                $product_variant_id = $lims_product_data->product_variant_id;
+            }
+        }
+
+        // 3. Try finding by nameCandidate (if format was Code (Name))
+        if(!$lims_product_data && $nameCandidate) {
+            $lims_product_data = Product::where([
+                ['name', $nameCandidate],
+                ['is_active', true]
+            ])->first();
+        }
+
+        // 4. Try finding if rawQuery is exact name
+        if(!$lims_product_data) {
+            $lims_product_data = Product::where([
+                ['name', $rawQuery],
+                ['is_active', true]
+            ])->first();
+        }
+
+        // 5. Try finding by LIKE product name prefix or substring
+        if(!$lims_product_data) {
+            $lims_product_data = Product::where('is_active', true)
+                ->where(function($q) use ($codeCandidate, $rawQuery) {
+                    $q->where('name', 'LIKE', '%' . $codeCandidate . '%')
+                      ->orWhere('name', 'LIKE', '%' . $rawQuery . '%');
+                })->first();
+        }
+
+        // 6. Safe fallback if product still not found
+        if(!$lims_product_data) {
+            return response()->json(['status' => 'error', 'message' => 'Product not found'], 404);
         }
 
         $product[] = $lims_product_data->name;

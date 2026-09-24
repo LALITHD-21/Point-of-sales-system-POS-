@@ -1403,6 +1403,17 @@
                     <div class="col-md-4">
                         <button class="btn btn-block btn-danger" id="featured-filter">{{trans('file.Featured')}}</button>
                     </div>
+                    <div class="col-md-12 mt-2 mb-1">
+                        <div class="input-group" style="box-shadow: 0 2px 5px rgba(0,0,0,0.08); border-radius: 8px; overflow: hidden;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white border-right-0 text-primary font-weight-bold" style="padding: 6px 12px;"><i class="fa fa-search"></i></span>
+                            </div>
+                            <input type="text" id="grid_search_filter" class="form-control border-left-0 border-right-0" placeholder="🔍 Search items by name (e.g. Maggi, Atta, Coke, boAt)..." style="font-size: 13px; height: 38px;" autocomplete="off" />
+                            <div class="input-group-append">
+                                <button class="btn btn-white border-left-0 text-muted" type="button" id="btn_clear_grid_search" title="Clear search" style="border: 1px solid #ced4da; border-left: none; background: #fff;"><i class="dripicons-cross"></i></button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12 mt-1 table-container">
                         <table id="product-table" class="table no-shadow product-list">
                             <thead class="d-none">
@@ -2264,6 +2275,7 @@ $.get('sales/getproduct/' + id, function(data) {
     product_batch_id = data[9];
     $.each(product_code, function(index) {
         lims_product_array.push(product_code[index] + ' (' + product_name[index] + ')');
+        lims_product_array.push(product_name[index] + ' (' + product_code[index] + ')');
     });
 });
 
@@ -2450,6 +2462,7 @@ $('select[name="warehouse_id"]').on('change', function() {
         product_batch_id = data[9];
         $.each(product_code, function(index) {
             lims_product_array.push(product_code[index] + ' (' + product_name[index] + ')');
+            lims_product_array.push(product_name[index] + ' (' + product_code[index] + ')');
         });
     });
 
@@ -2899,6 +2912,11 @@ function productSearch(data) {
             data: data
         },
         success: function(data) {
+            if (!data || data.status === 'error' || !data[0]) {
+                alert('Product not found! Please verify the barcode or product name.');
+                $("input[name='product_code_name']").val('');
+                return;
+            }
             var flag = 1;
             $(".product-code").each(function(i) {
                 if ($(this).val() == data[1]) {
@@ -3749,6 +3767,65 @@ $(document).ready(function() {
             var code = $(this).val().trim();
             if (code) {
                 productSearch(code);
+            }
+        }
+    });
+
+    // Live instant search filter for product grid
+    $('#grid_search_filter').on('input', function() {
+        var query = $(this).val().toLowerCase().trim();
+        if (!query) {
+            $('#product-table tbody tr').show();
+            $('#product-table td.product-img').show();
+            $('#no-grid-products-msg').remove();
+            return;
+        }
+
+        var visibleCount = 0;
+        $('#product-table td.product-img').each(function() {
+            var prodText = ($(this).attr('data-product') || '').toLowerCase();
+            var prodTitle = ($(this).attr('title') || '').toLowerCase();
+            var prodCode = ($(this).find('span').text() || '').toLowerCase();
+            var prodName = ($(this).find('p').text() || '').toLowerCase();
+
+            if (prodText.indexOf(query) !== -1 || prodTitle.indexOf(query) !== -1 || prodCode.indexOf(query) !== -1 || prodName.indexOf(query) !== -1) {
+                $(this).show();
+                visibleCount++;
+            } else {
+                $(this).hide();
+            }
+        });
+
+        $('#product-table tbody tr').each(function() {
+            var hasVisibleCell = $(this).find('td.product-img:visible').length > 0;
+            if (hasVisibleCell) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+
+        $('#no-grid-products-msg').remove();
+        if (visibleCount === 0) {
+            $('#product-table').after('<div id="no-grid-products-msg" class="text-center py-4 text-muted"><i class="fa fa-search-minus fa-2x mb-2 d-block"></i>No products found matching "' + $('<div>').text(query).html() + '"</div>');
+        }
+    });
+
+    $('#btn_clear_grid_search').on('click', function() {
+        $('#grid_search_filter').val('').trigger('input').focus();
+    });
+
+    $('#grid_search_filter').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            var $firstMatch = $('#product-table td.product-img:visible').first();
+            if ($firstMatch.length) {
+                $firstMatch.trigger('click');
+            } else {
+                var query = $(this).val().trim();
+                if (query) {
+                    productSearch(query);
+                }
             }
         }
     });
