@@ -841,8 +841,26 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="search-box form-group">
-                                            <input type="text" name="product_code_name" id="lims_productcodeSearch" placeholder="Scan/Search product by name/code" class="form-control"  />
+                                        <div class="search-box form-group" style="display: flex; gap: 8px;">
+                                            <input type="text" name="product_code_name" id="lims_productcodeSearch" placeholder="Scan barcode or type product name/code" class="form-control" style="flex: 1;" />
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#cameraModal" style="white-space: nowrap;"><i class="fa fa-camera"></i> Camera Scan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="cameraModal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade text-left">
+                                    <div role="document" class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"><i class="fa fa-camera"></i> Live Barcode & QR Scanner</h5>
+                                                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <div id="camera-reader" style="width: 100%; min-height: 260px; border-radius: 8px; overflow: hidden; background: #000;"></div>
+                                                <p class="text-muted mt-2" style="font-size: 12px;"><i class="fa fa-info-circle"></i> Point your camera at any product barcode or QR code.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2794,6 +2812,7 @@ function confirmDelete() {
 }
 
 function productSearch(data) {
+    playScanBeep();
     $.ajax({
         type: 'GET',
         url: 'sales/lims_product_search',
@@ -3324,8 +3343,60 @@ $('#product-table').DataTable( {
             'next': '<i class="fa fa-angle-right"></i>'
         }
     },
-    dom: 'tp'
+// Supermarket POS Audio Beep Synthesizer (Works 100% offline via Web Audio API)
+function playScanBeep() {
+    try {
+        var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(1760, audioCtx.currentTime); // 1760Hz crisp scan pitch
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.1);
+    } catch(e) {}
+}
+
+// Live Camera Barcode & QR Scanner Integration
+var html5QrCode = null;
+$('#cameraModal').on('shown.bs.modal', function () {
+    if (!html5QrCode) {
+        html5QrCode = new Html5Qrcode("camera-reader");
+    }
+    html5QrCode.start(
+        { facingMode: "environment" },
+        { 
+            fps: 15, 
+            qrbox: { width: 280, height: 160 },
+            aspectRatio: 1.777778
+        },
+        function (decodedText, decodedResult) {
+            playScanBeep();
+            $('#cameraModal').modal('hide');
+            html5QrCode.stop().then(function() {
+                $('#lims_productcodeSearch').val(decodedText);
+                productSearch(decodedText);
+            }).catch(function(err) {
+                $('#lims_productcodeSearch').val(decodedText);
+                productSearch(decodedText);
+            });
+        },
+        function (errorMessage) {}
+    ).catch(function(err) {
+        alert("Camera error or permission denied: " + err);
+        $('#cameraModal').modal('hide');
+    });
+});
+
+$('#cameraModal').on('hidden.bs.modal', function () {
+    if (html5QrCode && html5QrCode.isScanning) {
+        html5QrCode.stop().catch(function(){});
+    }
 });
 </script>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 @endpush
