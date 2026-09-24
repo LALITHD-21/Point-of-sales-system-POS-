@@ -3388,6 +3388,9 @@ $('#product-table').DataTable( {
             'next': '<i class="fa fa-angle-right"></i>'
         }
     },
+    dom: 'tp'
+});
+
 // Supermarket POS Audio Beep Synthesizer (Works 100% offline via Web Audio API)
 function playScanBeep() {
     try {
@@ -3428,13 +3431,19 @@ function stopActiveCameraScanner(callback) {
     if (html5QrCode && isScanningActive) {
         isScanningActive = false;
         html5QrCode.stop().then(function() {
-            html5QrCode.clear();
+            try { html5QrCode.clear(); } catch(e){}
+            html5QrCode = null;
             if (callback) callback();
         }).catch(function(err) {
             console.warn("Camera stop error:", err);
+            html5QrCode = null;
             if (callback) callback();
         });
     } else {
+        if (html5QrCode) {
+            try { html5QrCode.clear(); } catch(e){}
+            html5QrCode = null;
+        }
         if (callback) callback();
     }
 }
@@ -3504,8 +3513,23 @@ function startScanningSession(targetCameraId) {
         console.warn("Camera permission or initialization error:", err);
         $('#camera-status-alert').hide();
         $('#scanner-laser').hide();
-        $('#camera-permission-guide').show();
-        $('#camera-reader').html('<div class="py-4 text-center text-white"><i class="fa fa-video-camera fa-3x text-danger mb-2"></i><br><span class="text-danger font-weight-bold" style="font-size: 15px;">Camera Permission Not Granted</span><p class="text-muted mt-1" style="font-size: 12px;">Browser blocked camera access or no permission was given.</p></div>');
+
+        var errorMsg = "Browser blocked camera access or no permission was given.";
+        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+            errorMsg = "Camera access was denied or blocked in browser settings.";
+            $('#camera-permission-guide').show();
+        } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+            errorMsg = "No camera or webcam was detected on this device.";
+            $('#camera-permission-guide').hide();
+        } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+            errorMsg = "Camera is already in use by another application (e.g. Zoom, Teams, Meet). Please close that app and retry.";
+            $('#camera-permission-guide').hide();
+        } else {
+            errorMsg = err.message || "Failed to initialize camera (" + err.name + ")";
+            $('#camera-permission-guide').show();
+        }
+
+        $('#camera-reader').html('<div class="py-4 text-center text-white"><i class="fa fa-video-camera fa-3x text-danger mb-2"></i><br><span class="text-danger font-weight-bold" style="font-size: 15px;">Camera Unavailable</span><p class="text-white-50 mt-1 px-3" style="font-size: 13px;">' + errorMsg + '</p></div>');
     });
 }
 
@@ -3518,13 +3542,7 @@ function launchHtml5Scanner(cameraId) {
             html5QrCode = new Html5Qrcode("camera-reader");
             var scanConfig = {
                 fps: 20,
-                qrbox: function(viewfinderWidth, viewfinderHeight) {
-                    var minEdge = Math.min(viewfinderWidth, viewfinderHeight);
-                    return {
-                        width: Math.floor(minEdge * 0.85),
-                        height: Math.floor(minEdge * 0.55)
-                    };
-                },
+                qrbox: { width: 250, height: 160 },
                 aspectRatio: 1.333334
             };
 
@@ -3563,48 +3581,50 @@ function launchHtml5Scanner(cameraId) {
 }
 
 // User-gesture click handler for immediate camera permission prompt
-$('#cameraScanBtn').on('click', function(e) {
-    e.preventDefault();
-    $('#cameraModal').modal('show');
-    startScanningSession();
-});
-
-// Re-request permission button click handler
-$('#btn-request-permission-again').on('click', function() {
-    startScanningSession();
-});
-
-// Switch camera button handler
-$('#btn-switch-camera').on('click', function() {
-    var selectedId = $('#camera-select-dropdown').val();
-    if (selectedId) {
-        launchHtml5Scanner(selectedId);
-    }
-});
-
-$('#camera-select-dropdown').on('change', function() {
-    var selectedId = $(this).val();
-    if (selectedId) {
-        launchHtml5Scanner(selectedId);
-    }
-});
-
-// Cleanup when modal closes
-$('#cameraModal').on('hidden.bs.modal', function () {
-    stopActiveCameraScanner();
-    $('#camera-status-alert').hide();
-    $('#camera-permission-guide').hide();
-});
-
-// Enter keypress on product search input for instant barcode gun scan
-$('#lims_productcodeSearch').on('keypress', function(e) {
-    if (e.which === 13) {
+$(document).ready(function() {
+    $('#cameraScanBtn').on('click', function(e) {
         e.preventDefault();
-        var code = $(this).val().trim();
-        if (code) {
-            productSearch(code);
+        $('#cameraModal').modal('show');
+        startScanningSession();
+    });
+
+    // Re-request permission button click handler
+    $('#btn-request-permission-again').on('click', function() {
+        startScanningSession();
+    });
+
+    // Switch camera button handler
+    $('#btn-switch-camera').on('click', function() {
+        var selectedId = $('#camera-select-dropdown').val();
+        if (selectedId) {
+            launchHtml5Scanner(selectedId);
         }
-    }
+    });
+
+    $('#camera-select-dropdown').on('change', function() {
+        var selectedId = $(this).val();
+        if (selectedId) {
+            launchHtml5Scanner(selectedId);
+        }
+    });
+
+    // Cleanup when modal closes
+    $('#cameraModal').on('hidden.bs.modal', function () {
+        stopActiveCameraScanner();
+        $('#camera-status-alert').hide();
+        $('#camera-permission-guide').hide();
+    });
+
+    // Enter keypress on product search input for instant barcode gun scan
+    $('#lims_productcodeSearch').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            var code = $(this).val().trim();
+            if (code) {
+                productSearch(code);
+            }
+        }
+    });
 });
 </script>
 <style>
