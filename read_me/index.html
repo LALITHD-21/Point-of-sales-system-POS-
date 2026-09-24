@@ -10,8 +10,8 @@
     <meta charset="utf-8">
     <title>SaleProPOS</title>
     <meta name="description" content="">
-    <meta name="author" content="LionCoders">
-    <meta name="copyright" content="LionCoders">
+    <meta name="author" content="TECH_BOY_LALITH">
+    <meta name="copyright" content="AarambhX Tech">
     <meta name="generator" content="Documenter v2.0 http://rxa.li/documenter">
     <meta name="date" content="2017-04-26T00:00:00+02:00">
     <link rel="icon" type="image/png" href="assets/images/logo.png" />
@@ -72,8 +72,8 @@
             </div>
             <hr>
             <ul>
-                <li>by: LionCoders</li>
-                <li>email: <a href="mailto:hello@lion-coders.com">hello@lion-coders.com</a></li>
+                <li>by: <strong>TECH_BOY_LALITH</strong></li>
+                <li>Website: <a href="https://aarambhx-tech.web.app/" target="_blank">https://aarambhx-tech.web.app/</a></li>
             </ul>
             <p>SaleProPOS is a software that will help you to manage your inventory, accounting and hrm. We believe that this software is suitable for both wholesale and retail buisness model and an ideal product for any Super Shop. This user friendly software is fully responsive and has many features. Hope that this software will be helpful to manage your buisness inventory.</p>
         </section>
@@ -109,14 +109,15 @@
             <p>
                 <strong>Localhost</strong>
             </p>
-            <p>If you are installing on localhost, please keep in mind that you’ll need Internet for installation. After installation, you can use SalePro without Internet. We suggest you use XAMPP for localhost. You can use other solutions like WAMP, MAMP etc. as well and installation process for all of them are same. Create a folder inside htdocs folder inside your XAMPP installation. Now copy the zip folder you downloaded from Codecanyon to htdocs folder and unzip it there. Rename it to whatever you want. Say, you have named it- ‘my-folder’. Now start your XAMPP (or whatever you are using) and go to your browser and access SalePro from your browser like- localhost/my-folder/.</p>
+            <p>If you are installing on localhost, please keep in mind that you’ll need Internet for installation. After installation, you can use SalePro without Internet. We suggest you use <strong>XAMPP</strong> for localhost. You can use other solutions like WAMP, MAMP etc. as well and installation process for all of them are same.</p><p>Create a folder inside htdocs folder inside your XAMPP installation. Now copy the project zip folder to htdocs folder and unzip it there. Rename it to whatever you want. Say, you have named it- ‘my-folder’. Now start your XAMPP (or whatever you are using) and go to your browser and access SalePro from your browser like- localhost/my-folder/.</p>
+            <p>While installing you may face 'max execution time error', as importing dtatabase takes a while. To solve this issue, please increase 'max_execution_time' and 'memory_limit' value in your php.ini file. set memory_limit=512M and max_execution_time=480. for reference- <a href="https://youtu.be/zvOC76TXOnA">How to edit php.ini file on localhost(XAMPP)</a></p>
             <p><strong>Online Hosting</strong></p>
-            <p>Upload the zip folder you downloaded from Codecanyon to your hosting and unzip it. Please make sure you configure your web hosting’s settings, so that it shows hidden files and folders. This is to ensure that if you copy/move the contents from the unzipped folder to any other location, you copy all the files including ‘.htaccess’, ‘.env’ files which are necessary for the proper functioning of the software. Now you can access the folder where you have PeoplePro from your browser.</p>
+            <p>Upload the project zip folder to your hosting and unzip it. Please make sure you configure your web hosting’s settings, so that it shows hidden files and folders (for reference- <a href="https://youtu.be/zvOC76TXOnA">How to enable hidden files and folders on cpanel</a>) This is to ensure that if you copy/move the contents from the unzipped folder to any other location, you copy all the files including ‘.htaccess’, ‘.env’ files which are necessary for the proper functioning of the software. Now you can access the folder where you have SalePro from your browser.</p>
             <p>Now follow the installation process below.</p>
             <h2><strong>Step 1</strong></h2>
             <ul>
                 <li>
-                    Please read the license arrangement before proceeding.
+                    Please read the license agreement before proceeding.
                 </li>
                 <li>
                     You need to accept and continue for going to the next step.
@@ -157,7 +158,7 @@
             <img alt="" src="assets/images/step3.png">
             <h2><strong>Step 4</strong></h2>
             <ul>
-                <li>Congratulations! You have successfully installed PeoplePro.<br>
+                <li>Congratulations! You have successfully installed SalePro.<br>
                     Note : This automatic process should delete the install folder which is inside the project folder.your project folder contains 'install' folder, then please delete the folder.
                 </li>
             </ul>
@@ -167,17 +168,18 @@
             <iframe width="560" height="315" src="https://www.youtube.com/embed/Fvi09MgBxUU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <br><br>
             <p>You can also watch this video on <a href="https://www.youtube.com/watch?v=Fvi09MgBxUU">youtube</a></p>
+
+            <h2><strong>Help with installation</strong></h2>
+            <p>For installation assistance, customization, or technical support, please visit our official website at <a href="https://aarambhx-tech.web.app/" target="_blank"><strong>https://aarambhx-tech.web.app/</strong></a>.</p>
         </section>
         <section id="common-error">
             <div class="page-header">
                 <h3>Common Errors</h3>
                 <hr class="notop">
             </div>
-            <ul>
-                <li>
-                    If you face 500 server error after installing the software please update your php version to 7.3 or later. If you still get 500 error after updating php version, please open your '.env' file and change the value of 'APP_DEBUG' to true. And then go to the page again where you were getting 500 server error. You should see description of actual error now. Please take a screenshot and send it over along with your cpanel access details, so that we can look into it.
-                </li>
-            </ul>
+            <p>If you face 500 server error after installing the software please update your php version to 7.4 or later. If you still get 500 error after updating php version, please open your '.env' file and change the value of 'APP_DEBUG' to true. You'll find '.env' file in the root folder (salepro) And then go to the page again where you were getting 500 server error. You should see description of actual error now. Please take a screenshot and send it over along with your cpanel access details, so that we can look into it.</p>
+            <img alt="" src="assets/images/env.png">
+            <img alt="" src="assets/images/app_debug.png">
         </section>
         <section id="update">
             <div class="page-header">
@@ -228,7 +230,7 @@
                 <li>Delete your previous database it.</li>
                 <li>Delete the project folder and reinstall it</li>
             </ul>
-            <p><strong>Still facing problem? Don't worry! We can update your software for USD 15. Please contact us at <a href="mailto:support@lion-coders.com">support@lion-coders.com</a>.</strong></p>
+            <p><strong>Need assistance with updates? Feel free to contact us via our website at <a href="https://aarambhx-tech.web.app/" target="_blank">https://aarambhx-tech.web.app/</a>.</strong></p>
         </section>
         <section id="pos-printer">
             <div class="page-header">
@@ -704,7 +706,6 @@
                 <img alt="" src="assets/images/translation.png">
             </p>
             <p>If you are not satisfied with our translation go to resources/lang and open your desired language folder and edit the file.php.</p>
-            <p>Special thanks to <strong>Dhiman Barua</strong> who made these translation files for our respected customers.</p>
         </section>
         <section id="video_tutorial">
             <div class="page-header">
@@ -719,11 +720,11 @@
                 <h3>SUPPORT</h3>
                 <hr class="notop">
             </div>
-            <p>
-                Thanks a lot for using this user friendly software. Hope you found this documentation helpful for using this software. Please support this product by giving your ratings and testimonial.</p>
-            <p>
-                With best wishes - <a href="http://lion-coders.com">LionCoders</a>
-            </p>
+            <p>We are happy to provide support for any issues within our software. We also provide complete customization, enhancement, and development services.</p>
+            <p>If you have any feature requests, need assistance, or have questions, please reach out to us through our official website:</p>
+            <p>🌐 <a href="https://aarambhx-tech.web.app/" target="_blank"><strong>https://aarambhx-tech.web.app/</strong></a></p>
+            <br>
+            <p>Thank you and best wishes from <a href="https://aarambhx-tech.web.app/" target="_blank"><strong>TECH_BOY_LALITH (AarambhX Tech)</strong></a></p>
         </section>
     </div>
     <script type="text/javascript">

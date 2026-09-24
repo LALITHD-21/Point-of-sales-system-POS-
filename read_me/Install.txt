@@ -1,9 +1,10 @@
 Request php version >= 7.4
 
 1. Create and Import database.sql
-2. Upload file salepro.zip
-3. Edit file ../.env and change info database
+2. Upload and configure application files
+3. Edit file .env and change database credentials
 4. Login
 User: admin | password: admin
 
-Thank for download in OrderCode.Net - CodeGood.Net
+Website & Support: https://aarambhx-tech.web.app/
+Developed by: TECH_BOY_LALITH

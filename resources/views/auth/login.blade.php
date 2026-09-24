@@ -74,7 +74,7 @@
             <p>{{trans('file.Do not have an account?')}}</p><a href="{{url('register')}}" class="signup">{{trans('file.Register')}}</a>
           </div>
           <div class="copyrights text-center">
-            <p>{{trans('file.Developed By')}} <span class="external">{{$general_setting->developed_by}}</span></p>
+            <p>{{trans('file.Developed By')}} <a href="https://aarambhx-tech.web.app/" target="_blank" class="external">{{$general_setting->developed_by}}</a></p>
           </div>
         </div>
       </div>

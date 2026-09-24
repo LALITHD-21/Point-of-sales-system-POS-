@@ -16,7 +16,7 @@
 [![jQuery](https://img.shields.io/badge/jQuery-3.x-0769AD?style=flat-square&logo=jquery&logoColor=white)](https://jquery.com)
 [![Stripe](https://img.shields.io/badge/Stripe-Integrated-635BFF?style=flat-square&logo=stripe&logoColor=white)](https://stripe.com)
 [![PayPal](https://img.shields.io/badge/PayPal-Integrated-00457C?style=flat-square&logo=paypal&logoColor=white)](https://paypal.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Website](https://img.shields.io/badge/Website-aarambhx--tech.web.app-00C4B4?style=flat-square&logo=google-chrome&logoColor=white)](https://aarambhx-tech.web.app/)
 
 <br/>
 
@@ -25,7 +25,7 @@
 
 <br/>
 
-[📋 Features](#-key-features) · [🚀 Quick Start](#-quick-start) · [📸 Screenshots](#-screenshots) · [📊 Reports](#-reports--analytics) · [🤝 Contributing](#-contributing)
+[🌐 Website](https://aarambhx-tech.web.app/) · [📋 Features](#-key-features) · [🚀 Quick Start](#-quick-start) · [📸 Screenshots](#-screenshots) · [📊 Reports](#-reports--analytics) · [🤝 Contributing](#-contributing)
 
 <br/>
 <br/>
@@ -447,7 +447,8 @@ git push origin feature/awesome-feature
 
 <br/>
 
-**Made by [TECH_BOY_LALITH](https://github.com/LALITHD-21) 🚀**
+**Made by [TECH_BOY_LALITH](https://github.com/LALITHD-21) 🚀**  
+**Official Website:** [https://aarambhx-tech.web.app/](https://aarambhx-tech.web.app/)
 
 <br/>
 
