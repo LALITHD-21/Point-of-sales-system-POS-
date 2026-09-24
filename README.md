@@ -1,451 +1,437 @@
-<![CDATA[<div align="center">
+<div align="center">
+  
+<img src="https://img.shields.io/badge/🛒_SalePro_POS-Inventory_Management_System-blue?style=for-the-badge&labelColor=1a1a2e&color=16213e" alt="SalePro POS" width="600"/>
 
-# 🛒 SalePro — Point of Sale & Inventory Management System
+<br/>
+<br/>
 
-### *A Powerful, Feature-Rich POS Solution with Integrated HRM & Accounting*
-
-[![Laravel](https://img.shields.io/badge/Laravel-8.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![PHP](https://img.shields.io/badge/PHP-≥7.4-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
-[![MySQL](https://img.shields.io/badge/MySQL-MariaDB-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-4.x-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge)](https://github.com/LALITHD-21/Point-of-sales-system-POS-/pulls)
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=4000&pause=1000&color=4FC3F7&center=true&vCenter=true&multiline=true&repeat=true&width=700&height=80&lines=Point+of+Sale+%7C+Inventory+%7C+HRM+%7C+Accounting;All-in-One+Business+Management+Platform" alt="Typing SVG" />
 
 <br/>
 
-<p align="center">
-  <strong>An all-in-one business management platform designed for retail stores, super shops, wholesale businesses, and multi-warehouse enterprises. Manage your inventory, process sales, handle accounting, and oversee HR — all from a single, elegant dashboard.</strong>
-</p>
+[![Laravel](https://img.shields.io/badge/Laravel-8.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-%E2%89%A5%207.4-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-MariaDB-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-4.x-7952B3?style=flat-square&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![jQuery](https://img.shields.io/badge/jQuery-3.x-0769AD?style=flat-square&logo=jquery&logoColor=white)](https://jquery.com)
+[![Stripe](https://img.shields.io/badge/Stripe-Integrated-635BFF?style=flat-square&logo=stripe&logoColor=white)](https://stripe.com)
+[![PayPal](https://img.shields.io/badge/PayPal-Integrated-00457C?style=flat-square&logo=paypal&logoColor=white)](https://paypal.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
----
+<br/>
 
-[Features](#-features) •
-[Tech Stack](#-tech-stack) •
-[Installation](#-installation) •
-[Usage](#-usage) •
-[Architecture](#-architecture) •
-[Reports](#-reports) •
-[Multi-Language](#-multi-language-support) •
-[Contributing](#-contributing)
+**A complete business management platform for retail stores, super shops, wholesale businesses,**  
+**and multi-warehouse enterprises — manage inventory, sales, accounting & HR from one dashboard.**
+
+<br/>
+
+[📋 Features](#-key-features) · [🚀 Quick Start](#-quick-start) · [📸 Screenshots](#-screenshots) · [📊 Reports](#-reports--analytics) · [🤝 Contributing](#-contributing)
+
+<br/>
+<br/>
 
 </div>
 
 ---
 
-## 📸 Preview
+## 📸 Screenshots
 
-| Dashboard | POS Interface | Invoice |
-|:---------:|:-------------:|:-------:|
-| ![Dashboard](read_me/assets/images/dashboard1.png) | ![POS](read_me/assets/images/sale1.png) | ![Invoice](read_me/assets/images/sale6.png) |
+<div align="center">
 
-| Purchase Management | Accounting | Reports |
-|:-------------------:|:----------:|:-------:|
-| ![Purchase](read_me/assets/images/purchase1.png) | ![Accounting](read_me/assets/images/accounting_1.png) | ![Reports](read_me/assets/images/dashboard2.png) |
+|  |  |
+|:---:|:---:|
+| ![Dashboard](read_me/assets/images/dashboard1.png) | ![POS](read_me/assets/images/sale1.png) |
+| **📊 Real-Time Dashboard** | **🖥️ POS Interface** |
+| ![Purchase](read_me/assets/images/purchase1.png) | ![Invoice](read_me/assets/images/sale6.png) |
+| **🛒 Purchase Management** | **🧾 Auto-Generated Invoice** |
+| ![Cash Flow](read_me/assets/images/dashboard4.png) | ![Charts](read_me/assets/images/dashboard2.png) |
+| **💰 Cash Flow Analytics** | **📈 Yearly Sales vs Purchase** |
+
+</div>
 
 ---
 
-## ✨ Features
+## 📋 Key Features
 
-<table>
-<tr>
-<td width="50%">
+<div align="center">
 
-### 🏪 Point of Sale (POS)
-- 🖥️ Touch-screen optimized POS interface
-- 📷 Barcode scanning & product search
-- 🏷️ Barcode label printing (36mm, 24mm, 18mm)
-- 💳 Multiple payment methods (Cash, Card, PayPal, Gift Card, Cheque)
-- 🎁 Gift card creation & recharge system
-- 🎟️ Coupon & discount management
-- 🧾 Beautiful auto-generated invoices
-- 📧 Automatic email notifications to customers
-- 💰 Cash register management
+### 🏪 Point of Sale
 
-</td>
-<td width="50%">
+</div>
+
+> A touch-screen optimized, fast POS interface built for speed and simplicity.
+
+- ⚡ **Instant product search** — type name or scan barcode to add items
+- 🖼️ **Visual product grid** — tap featured product images to add to cart
+- 💳 **6 payment methods** — Cash, Credit Card (Stripe), PayPal, Gift Card, Cheque, Customer Deposit
+- 🧾 **Auto-generated invoices** — beautifully designed, printable & emailable
+- 🎁 **Gift cards** — create, sell & recharge; customers use them at checkout
+- 🎟️ **Coupons & discounts** — apply order-level tax, discount & shipping
+- 🖨️ **POS thermal printing** — supports 36mm, 24mm & 18mm receipt paper
+- 💰 **Cash register** — track opening & closing balances per shift
+- ⌨️ **On-screen keyboard** — built-in touch keyboard for kiosk/tablet mode
+
+---
+
+<div align="center">
 
 ### 📦 Inventory Management
-- 📋 Product categories, brands & units
-- 📊 Standard, Digital & Combo product types
-- 🏭 Multi-warehouse support
-- 🔄 Inter-warehouse stock transfers
-- 📉 Quantity adjustment (Addition/Subtraction)
-- 📦 Stock count (Full & Partial)
-- ⚠️ Low stock quantity alerts
-- 📥 CSV bulk import/export
-- 🔍 Advanced search & filtering
 
-</td>
-</tr>
-<tr>
-<td width="50%">
+</div>
 
-### 🛍️ Sales & Purchase
-- 📝 Complete purchase order management
-- 🛒 Sales with multiple status tracking
-- 📬 Quotation management (with sale/purchase conversion)
-- 🔙 Purchase & sale return handling
-- 🚚 Delivery tracking & management
-- 💵 Partial payments & deposit support
-- 📄 Payment via Stripe & PayPal integration
-- 📨 Automated confirmation emails
+> Smart stock tracking across multiple warehouses with real-time quantity updates.
 
-</td>
-<td width="50%">
+- 🏭 **Multi-warehouse** — track stock per warehouse, transfer between locations
+- 📋 **3 product types** — Standard, Digital & Combo (e.g. juice = mango + sugar)
+- 📊 **Auto stock updates** — purchase adds stock, sale deducts it — zero manual work
+- 🔄 **Stock transfers** — move products between warehouses with full tracking
+- 📉 **Quantity adjustment** — add or subtract stock with audit trail
+- 📦 **Stock count** — full or partial count, export to CSV, auto-adjust quantities
+- ⚠️ **Low stock alerts** — get notified when product quantity drops below threshold
+- 🏷️ **Barcode generation** — print barcode labels on Brother label printers
+- 📥 **Bulk CSV import** — import products, categories, brands & units from CSV
 
-### 💼 HRM (Human Resource Management)
-- 🏢 Department management
-- 👥 Employee records & user access control
-- ⏰ Attendance tracking (Check-in/Check-out)
-- 💰 Payroll processing
-- 🎄 Holiday management
-- 🔐 Role-based permissions (RBAC)
-- 📊 Employee reporting
+---
 
-</td>
-</tr>
-<tr>
-<td width="50%">
+<div align="center">
 
-### 📊 Accounting
-- 🏦 Multi-account management
-- 📖 Balance sheet generation
-- 📝 Account statements
-- 💸 Expense tracking & categorization
-- 🔄 Money transfer between accounts
-- 📈 Cash flow visualization
-- 💰 Profit/Loss calculations
+### 🛍️ Sales & Purchases
 
-</td>
-<td width="50%">
+</div>
+
+> Complete buy-to-sell lifecycle with quotations, orders, payments & returns.
+
+- 🛒 **Sales management** — create sales from POS or manual entry, track status
+- 📝 **Purchase orders** — manage supplier purchases with partial/pending/received status
+- 📬 **Quotations** — create quotes, convert to sale or purchase in one click
+- 🔙 **Returns** — handle both customer returns & supplier returns with auto stock update
+- 🚚 **Delivery tracking** — manage deliveries with automatic customer email notifications
+- 💵 **Partial payments** — accept multiple partial payments per transaction
+- 📧 **Auto emails** — sale confirmation, payment receipt, delivery & return notifications
+- 📄 **CSV import** — bulk import sales, purchases & transfers from spreadsheets
+
+---
+
+<div align="center">
+
+### 💼 Accounting & Finance
+
+</div>
+
+> Track every penny with multi-account management and auto-generated financial reports.
+
+- 🏦 **Multiple accounts** — create & manage bank accounts, set default for sales
+- 📖 **Balance sheet** — auto-generated balance sheet across all accounts
+- 📝 **Account statements** — detailed transaction history per account
+- 💸 **Expense tracking** — categorize & track all business expenses
+- 🔄 **Money transfers** — transfer funds between accounts with full audit trail
+- 📈 **Cash flow charts** — visual line charts showing income vs expenditure
+- 🍩 **Spending breakdown** — doughnut charts for purchase, revenue & expense ratios
+- 💰 **Profit/Loss** — auto-calculated P&L with date range filtering
+
+---
+
+<div align="center">
+
+### 👥 HRM Module
+
+</div>
+
+> Manage your team with attendance tracking, payroll & department organization.
+
+- 🏢 **Departments** — organize employees by department
+- 👤 **Employee records** — full employee profiles with user account access
+- ⏰ **Attendance** — daily check-in/check-out with configurable default times
+- 💰 **Payroll** — process employee salaries from specific accounts
+- 🎄 **Holidays** — manage holiday calendar & approve leave requests
+- 🔐 **Role-based access (RBAC)** — granular permissions per role using Spatie
+- 📊 **HR reports** — attendance & payroll reporting
+
+---
+
+<div align="center">
 
 ### 👥 People Management
-- 👤 User management with role-based access
-- 🛒 Customer management with deposits
-- 🏢 Biller management (multi-company)
-- 🤝 Supplier management
-- 📧 Automated welcome emails
-- 📊 Customer grouping with custom pricing
-- 📱 SMS notifications (Twilio/Clickatell)
 
-</td>
-</tr>
-</table>
+</div>
+
+> Centralized management of all stakeholders — users, customers, billers & suppliers.
+
+- 👤 **Users** — create accounts with role assignment; password auto-emailed
+- 🛒 **Customers** — manage customer database, group pricing & wallet deposits
+- 🏢 **Billers** — multi-company support; each biller represents a business entity
+- 🤝 **Suppliers** — track vendors you purchase from with contact details
+- 📊 **Customer groups** — set group-specific price percentages (wholesale vs retail)
+- 📱 **SMS notifications** — bulk SMS via Twilio & Clickatell with country code support
+- 📧 **Auto-emails** — welcome emails on creation for customers, billers & suppliers
+- 📥 **CSV import** — bulk import people data from spreadsheets
 
 ---
 
 ## 🛠️ Tech Stack
 
-<div align="center">
-
-| Layer | Technology |
-|:------|:-----------|
-| **Backend Framework** | Laravel 8.x (PHP ≥ 7.4) |
-| **Database** | MySQL / MariaDB |
-| **Frontend** | Blade Templates, Bootstrap 4, jQuery |
-| **Authentication** | Laravel Auth with RBAC (Spatie Permissions) |
-| **Payment Gateway** | Stripe, PayPal (srmklive/paypal) |
-| **Excel/CSV** | Maatwebsite Excel 3.x |
-| **Image Processing** | Intervention Image |
-| **Barcode Generation** | milon/barcode |
-| **SMS Gateway** | Twilio SDK |
-| **PDF Generation** | Built-in PDF export |
-| **Web Server** | Apache / Nginx |
-| **PWA Support** | Service Worker + Manifest |
-
-</div>
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        FRONTEND                                 │
+│  Bootstrap 4  ·  jQuery  ·  Blade Templates  ·  PWA Ready       │
+├─────────────────────────────────────────────────────────────────┤
+│                        BACKEND                                  │
+│  Laravel 8.x  ·  PHP ≥ 7.4  ·  Spatie Permissions (RBAC)       │
+├─────────────────────────────────────────────────────────────────┤
+│                      INTEGRATIONS                               │
+│  Stripe  ·  PayPal  ·  Twilio SMS  ·  Clickatell SMS            │
+├─────────────────────────────────────────────────────────────────┤
+│                       LIBRARIES                                 │
+│  Maatwebsite Excel · Intervention Image · milon/barcode         │
+│  kwn/number-to-words · GuzzleHTTP · gladcodes/keygen            │
+├─────────────────────────────────────────────────────────────────┤
+│                       DATABASE                                  │
+│  MySQL / MariaDB  ·  60+ Tables  ·  Doctrine DBAL               │
+├─────────────────────────────────────────────────────────────────┤
+│                        SERVER                                   │
+│  Apache / Nginx  ·  Mod Rewrite  ·  SSL Ready                   │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🏗️ Architecture
+## 🗂️ Project Structure
 
 ```
 salepro/
+│
 ├── app/
-│   ├── Http/
-│   │   ├── Controllers/          # 40+ controllers for all modules
-│   │   │   ├── SaleController    # POS & Sales management
-│   │   │   ├── PurchaseController# Purchase & procurement
-│   │   │   ├── ProductController # Product & inventory
-│   │   │   ├── AccountsController# Accounting module
-│   │   │   ├── EmployeeController# HRM module
-│   │   │   ├── ReportController  # Reporting engine
-│   │   │   └── ...
-│   │   └── Middleware/
-│   ├── Notifications/            # Email & SMS notifications
-│   ├── Providers/
-│   └── StockCount/               # Stock counting logic
-├── config/                       # App configuration
-├── database/
-│   ├── migrations/               # Database schema
-│   ├── factories/                # Test data factories
-│   └── seeders/                  # Database seeders
-├── public/                       # Public assets
+│   ├── Http/Controllers/        # 40+ controllers
+│   │   ├── SaleController       # POS & sales
+│   │   ├── PurchaseController   # Procurement
+│   │   ├── ProductController    # Inventory
+│   │   ├── AccountsController   # Finance
+│   │   ├── EmployeeController   # HRM
+│   │   ├── ReportController     # Analytics
+│   │   ├── GiftCardController   # Gift cards
+│   │   ├── CouponController     # Coupons
+│   │   └── ...38 more
+│   ├── Notifications/           # Email & SMS alerts
+│   └── StockCount/              # Stock counting logic
+│
 ├── resources/
-│   ├── views/                    # Blade templates
-│   └── lang/                     # Multi-language files (11 languages)
-├── routes/                       # Application routes
-├── storage/                      # File storage
-├── service-worker.js             # PWA support
-└── manifest.json                 # PWA manifest
+│   ├── views/                   # 80+ Blade templates
+│   └── lang/                    # 11 language packs
+│
+├── database/
+│   └── database.sql             # Full schema (60+ tables)
+│
+├── routes/web.php               # Application routes
+├── service-worker.js            # PWA offline support
+└── manifest.json                # PWA manifest
 ```
 
-### Database Schema — 60+ Tables
+---
+
+## 🗄️ Database Schema
+
+60+ tables powering the entire platform:
 
 ```mermaid
 erDiagram
-    PRODUCTS ||--o{ PRODUCT_SALES : "sold_in"
-    PRODUCTS ||--o{ PRODUCT_PURCHASES : "purchased_in"
-    PRODUCTS ||--o{ PRODUCT_WAREHOUSE : "stored_in"
-    PRODUCTS ||--o{ PRODUCT_VARIANTS : "has"
-    SALES ||--|{ PRODUCT_SALES : "contains"
-    SALES ||--o{ PAYMENTS : "paid_via"
-    SALES ||--o{ DELIVERIES : "delivered"
-    PURCHASES ||--|{ PRODUCT_PURCHASES : "contains"
-    PURCHASES ||--o{ PAYMENTS : "paid_via"
-    CUSTOMERS ||--o{ SALES : "makes"
-    CUSTOMERS }|--|| CUSTOMER_GROUPS : "belongs_to"
-    SUPPLIERS ||--o{ PURCHASES : "supplies"
-    WAREHOUSES ||--o{ PRODUCT_WAREHOUSE : "stocks"
-    WAREHOUSES ||--o{ TRANSFERS : "transfers"
-    ACCOUNTS ||--o{ PAYMENTS : "receives"
-    EMPLOYEES ||--o{ ATTENDANCES : "records"
-    EMPLOYEES ||--o{ PAYROLLS : "receives"
-    USERS ||--o{ ROLES : "assigned"
-    ROLES ||--o{ PERMISSIONS : "grants"
+    PRODUCTS ||--o{ PRODUCT_SALES : "sold in"
+    PRODUCTS ||--o{ PRODUCT_PURCHASES : "purchased in"
+    PRODUCTS ||--o{ PRODUCT_WAREHOUSE : "stored in"
+    PRODUCTS ||--o{ PRODUCT_VARIANTS : "has variants"
+    PRODUCTS }o--|| CATEGORIES : "belongs to"
+    PRODUCTS }o--|| BRANDS : "made by"
+    SALES ||--|{ PRODUCT_SALES : contains
+    SALES ||--o{ PAYMENTS : "paid via"
+    SALES ||--o{ DELIVERIES : delivered
+    SALES }o--|| CUSTOMERS : "sold to"
+    PURCHASES ||--|{ PRODUCT_PURCHASES : contains
+    PURCHASES ||--o{ PAYMENTS : "paid via"
+    PURCHASES }o--|| SUPPLIERS : "bought from"
+    CUSTOMERS }o--|| CUSTOMER_GROUPS : "belongs to"
+    CUSTOMERS ||--o{ DEPOSITS : "has balance"
+    WAREHOUSES ||--o{ PRODUCT_WAREHOUSE : stocks
+    WAREHOUSES ||--o{ TRANSFERS : "transfers from/to"
+    ACCOUNTS ||--o{ PAYMENTS : receives
+    ACCOUNTS ||--o{ MONEY_TRANSFERS : "transfers between"
+    EMPLOYEES ||--o{ ATTENDANCES : records
+    EMPLOYEES ||--o{ PAYROLLS : receives
+    EMPLOYEES }o--|| DEPARTMENTS : "works in"
+    USERS }o--o{ ROLES : assigned
+    ROLES }o--o{ PERMISSIONS : grants
 ```
 
 ---
 
-## 🚀 Installation
+## 🚀 Quick Start
 
 ### Prerequisites
 
-| Requirement | Version |
-|:------------|:--------|
-| PHP | ≥ 7.4 |
-| MySQL / MariaDB | 5.7+ / 10.x |
-| Apache / Nginx | Latest |
-| Composer | Latest |
+| Requirement | Minimum Version |
+|:--|:--|
+| **PHP** | 7.4+ |
+| **MySQL** or **MariaDB** | 5.7+ / 10.x |
+| **Apache** or **Nginx** | Latest |
+| **Composer** | Latest |
 
-#### Required PHP Extensions
+**Required PHP Extensions:**
+
 ```
-✅ OpenSSL    ✅ PDO         ✅ Fileinfo
-✅ Mbstring   ✅ Tokenizer   ✅ Zip Archive
-✅ Mod Rewrite (enabled)
+OpenSSL  ·  PDO  ·  Fileinfo  ·  Mbstring  ·  Tokenizer  ·  Zip  ·  Mod Rewrite
 ```
 
-### 📋 Step-by-Step Installation
+### Installation
 
-#### Option A: Localhost (XAMPP/WAMP/MAMP)
-
+**1 → Clone & enter the project**
 ```bash
-# 1. Clone the repository
 git clone https://github.com/LALITHD-21/Point-of-sales-system-POS-.git
 cd Point-of-sales-system-POS-
-
-# 2. Copy the project folder to your htdocs directory
-# (e.g., C:\xampp\htdocs\salepro)
-
-# 3. Create a MySQL database named 'salepro'
-mysql -u root -p -e "CREATE DATABASE salepro;"
-
-# 4. Import the database schema
-mysql -u root -p salepro < database.sql
-
-# 5. Configure the .env file
-cp .env.example .env
-# Edit .env with your database credentials:
-#   DB_DATABASE=salepro
-#   DB_USERNAME=root
-#   DB_PASSWORD=your_password
-
-# 6. Install dependencies
-composer install
-
-# 7. Generate application key
-php artisan key:generate
-
-# 8. Access the application
-# Visit: http://localhost/salepro
 ```
 
-#### Option B: Production Server
-
+**2 → Create database & import schema**
 ```bash
-# 1. Upload the project files to your hosting
-# 2. Create a MySQL database via cPanel/Plesk
-# 3. Import database.sql via phpMyAdmin
-# 4. Configure .env with production database credentials
-# 5. Ensure the web server points to the public/ directory
-# 6. Set proper file permissions
-chmod -R 775 storage/
-chmod -R 775 bootstrap/cache/
+mysql -u root -p -e "CREATE DATABASE salepro;"
+mysql -u root -p salepro < database.sql
 ```
 
-### 🔑 Default Login Credentials
+**3 → Configure environment**
+```bash
+cp .env.example .env
+```
+Edit `.env` and set your database credentials:
+```env
+DB_DATABASE=salepro
+DB_USERNAME=root
+DB_PASSWORD=your_password
+```
 
-| Role | Username | Password |
-|:-----|:---------|:---------|
-| **Admin** | `admin` | `admin` |
+**4 → Install dependencies & generate key**
+```bash
+composer install
+php artisan key:generate
+```
 
-> ⚠️ **Important:** Change the default credentials immediately after your first login!
+**5 → Launch**
+```
+http://localhost/salepro
+```
 
----
+### 🔐 Default Login
 
-## 📖 Usage
+| | |
+|:--|:--|
+| **Username** | `admin` |
+| **Password** | `admin` |
 
-### POS Interface
-1. Navigate to **Sale → POS** from the sidebar
-2. Select or scan products using the barcode scanner
-3. Click product images to add items to the cart
-4. Apply discounts, taxes, or coupons as needed
-5. Click **Payment** to finalize the transaction
-6. Choose payment method (Cash, Card, PayPal, Gift Card)
-7. Invoice is auto-generated and emailed to the customer
-
-### Inventory Management
-1. **Add Products:** Navigate to Products → Add Product
-2. **Purchase Stock:** Create a purchase order to add stock quantities
-3. **Transfer Stock:** Use Transfer module for inter-warehouse movements
-4. **Stock Count:** Run full or partial stock counts with CSV export
-5. **Adjustments:** Fine-tune quantities with the Adjustment module
-
-### POS Printer Setup
-1. Install your thermal printer driver
-2. Go to **Settings → Devices & Printers**
-3. Set your POS printer as the default
-4. Configure paper size (select the 3rd option) in printer preferences
-5. Print invoices directly from the POS interface
+> ⚠️ **Change these credentials immediately after first login.**
 
 ---
 
-## 📊 Reports
+## 💳 Payment Methods
 
-SalePro generates **16+ comprehensive reports** to give you complete business visibility:
-
-| Report Category | Reports |
-|:----------------|:--------|
-| **Financial** | Profit/Loss Report, Payment Report, Due Report |
-| **Sales** | Daily Sale, Monthly Sale, Sale Report, Best Seller |
-| **Purchase** | Daily Purchase, Monthly Purchase, Purchase Report |
-| **Inventory** | Product Report, Warehouse Stock Chart, Quantity Alert |
-| **People** | User Report, Customer Report, Supplier Report |
+| Method | Provider | Status |
+|:--|:--|:--:|
+| Cash | Built-in | ✅ |
+| Credit / Debit Card | **Stripe** | ✅ |
+| PayPal | **PayPal Live API** | ✅ |
+| Gift Card | Built-in | ✅ |
+| Cheque | Built-in | ✅ |
+| Customer Deposit | Built-in | ✅ |
 
 ---
 
-## 🌍 Multi-Language Support
+## 📊 Reports & Analytics
 
-SalePro comes pre-loaded with **11 languages** and is easily extensible:
+**16 built-in reports** for complete business visibility:
 
-<div align="center">
+| Category | Reports |
+|:--|:--|
+| 💰 **Financial** | Profit / Loss · Payment Report · Due Report |
+| 🛒 **Sales** | Daily Sale · Monthly Sale · Sale Report · Best Seller |
+| 📦 **Purchase** | Daily Purchase · Monthly Purchase · Purchase Report |
+| 📋 **Inventory** | Product Report · Warehouse Stock Chart · Quantity Alert |
+| 👥 **People** | User Report · Customer Report · Supplier Report |
 
+Plus interactive **dashboard charts**: cash flow line chart, purchase/revenue/expense doughnut, yearly bar chart, and top 5 best-selling products.
+
+---
+
+## 🌍 Languages
+
+Supports **11 languages** out of the box — switch from **Settings → General Settings**:
+
+| | | | |
+|:--:|:--:|:--:|:--:|
 | 🇺🇸 English | 🇪🇸 Spanish | 🇫🇷 French | 🇸🇦 Arabic |
-|:-----------:|:-----------:|:----------:|:----------:|
 | 🇵🇹 Portuguese | 🇩🇪 German | 🇳🇱 Dutch | 🇮🇳 Hindi |
-| 🇮🇹 Italian | 🇷🇺 Russian | 🇹🇷 Turkish | ➕ *Add yours!* |
+| 🇮🇹 Italian | 🇷🇺 Russian | 🇹🇷 Turkish | ➕ **Add yours** |
 
-</div>
-
-> 📝 To add a new language or customize translations, edit the files in `resources/lang/`
+> Add or customize translations in `resources/lang/`
 
 ---
 
-## 💳 Payment Integrations
+## 🔐 Access Control
 
-<div align="center">
+Role-based access control powered by **Spatie Laravel Permission**:
 
-| Method | Status | Provider |
-|:-------|:------:|:---------|
-| 💵 Cash | ✅ Built-in | — |
-| 💳 Credit Card | ✅ Integrated | Stripe |
-| 🅿️ PayPal | ✅ Integrated | PayPal Live API |
-| 🎁 Gift Card | ✅ Built-in | — |
-| 📝 Cheque | ✅ Built-in | — |
-| 💰 Customer Deposit | ✅ Built-in | — |
-
-</div>
-
----
-
-## 📱 SMS & Notifications
-
-- **Email:** Automated emails for sales, payments, deliveries, returns, and quotations
-- **SMS:** Bulk SMS via **Twilio** and **Clickatell** integration
-- **In-App:** Real-time notification system
-
----
-
-## ⚙️ Configuration
-
-### General Settings
-- Site Title & Logo customization
-- Currency & Timezone configuration
-- Date format preferences
-- Theme color selection
-- Staff access controls
-
-### POS Settings
-- Default customer, biller & warehouse
-- Featured products display count
-- Stripe & PayPal API keys
-- Payment gateway configuration
-
-### HRM Settings
-- Default check-in / check-out times
-- Holiday calendar management
-- Payroll account configuration
-
-### Mail Server
-Configure SMTP settings under **Settings → Mail Setting** for automated email delivery.
-
----
-
-## 🔐 Role-Based Access Control (RBAC)
-
-SalePro uses **Spatie Laravel Permission** for granular access control:
-
-- Create custom roles with specific permissions
-- Assign roles to users for module-level access
-- Control visibility and actions per role
-- Admin, Manager, Cashier — define as many roles as needed
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+- **Create custom roles** — Admin, Manager, Cashier, Accountant, or any role you need
+- **Granular permissions** — control access to each module and action
+- **User registration** — staff can self-register, admin approves activation
+- **Activity tracking** — know who did what with user-level audit
 
 ---
 
 ## 🐛 Troubleshooting
 
 <details>
-<summary><strong>500 Server Error after installation</strong></summary>
+<summary><b>500 Server Error after installation</b></summary>
+<br/>
 
-1. Update PHP to version 7.4 or later
-2. Open `.env` file and set `APP_DEBUG=true`
-3. Revisit the page to see the actual error description
-4. Check file permissions on `storage/` and `bootstrap/cache/`
+1. Ensure PHP version is **7.4 or later**
+2. Set `APP_DEBUG=true` in your `.env` file to see the real error
+3. Check permissions: `chmod -R 775 storage/ bootstrap/cache/`
+4. Verify all required PHP extensions are installed
 </details>
 
 <details>
-<summary><strong>Missing .htaccess or .env files</strong></summary>
+<summary><b>Missing .htaccess or .env files</b></summary>
+<br/>
 
-Enable "Show hidden files" in your file manager/hosting panel to ensure `.htaccess` and `.env` are properly copied.
+These are hidden files. Enable **"Show hidden files"** in your file manager or hosting panel before copying/moving the project.
 </details>
 
 <details>
-<summary><strong>Barcode printing issues</strong></summary>
+<summary><b>Barcode not printing correctly</b></summary>
+<br/>
 
-We recommend using a **Brother Label Printer** with supported paper sizes: 36mm, 24mm, or 18mm.
+- Use a **Brother Label Printer** for best results
+- Supported paper sizes: **36mm**, **24mm**, **18mm** only
+- Set the correct paper size in both printer preferences and print dialog
 </details>
+
+<details>
+<summary><b>Emails not sending</b></summary>
+<br/>
+
+Configure your SMTP settings under **Settings → Mail Setting** with your mail provider's host, port, username & password.
+</details>
+
+---
+
+## 🤝 Contributing
+
+```bash
+# 1. Fork the repo
+# 2. Create your feature branch
+git checkout -b feature/awesome-feature
+
+# 3. Commit your changes
+git commit -m "Add awesome feature"
+
+# 4. Push to the branch
+git push origin feature/awesome-feature
+
+# 5. Open a Pull Request
+```
 
 ---
 
@@ -457,12 +443,18 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 <div align="center">
 
-### ⭐ Star this repo if you find it useful!
+<br/>
 
-**Built with ❤️ using Laravel**
+**If this project helped you, please give it a ⭐**
 
-[![GitHub stars](https://img.shields.io/github/stars/LALITHD-21/Point-of-sales-system-POS-?style=social)](https://github.com/LALITHD-21/Point-of-sales-system-POS-/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/LALITHD-21/Point-of-sales-system-POS-?style=social)](https://github.com/LALITHD-21/Point-of-sales-system-POS-/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/LALITHD-21/Point-of-sales-system-POS-?style=social)](https://github.com/LALITHD-21/Point-of-sales-system-POS-/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/LALITHD-21/Point-of-sales-system-POS-?style=social)](https://github.com/LALITHD-21/Point-of-sales-system-POS-/network/members)
+[![GitHub Watchers](https://img.shields.io/github/watchers/LALITHD-21/Point-of-sales-system-POS-?style=social)](https://github.com/LALITHD-21/Point-of-sales-system-POS-/watchers)
+
+<br/>
+
+**Built with ❤️ using [Laravel](https://laravel.com)**
+
+<br/>
 
 </div>
-]]>
