@@ -8,6 +8,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="<?php echo asset('vendor/font-awesome/css/font-awesome.min.css') ?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo asset('vendor/dripicons/webfont.css') ?>" type="text/css">
 
     <style type="text/css">
         * {
@@ -77,16 +79,19 @@
 <body>
 
 <div style="max-width:400px;margin:0 auto">
-    @if(preg_match('~[0-9]~', url()->previous()))
-        @php $url = '../../pos'; @endphp
-    @else
-        @php $url = url()->previous(); @endphp
-    @endif
-    <div class="hidden-print">
-        <table>
+    @php $pos_url = url('pos'); @endphp
+    <div class="hidden-print" style="margin-bottom: 12px;">
+        <div style="background: #e0f2fe; border: 1px solid #7dd3fc; border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; font-size: 13px; color: #0369a1; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <strong style="display: block; font-size: 13px;"><i class="fa fa-print"></i> Auto-Printing Receipt...</strong>
+                <span style="font-size: 11px; color: #0284c7;" id="redirect-timer-msg">Returning to POS in <span id="countdown" style="font-weight: bold;">4</span>s</span>
+            </div>
+            <a href="{{$pos_url}}" class="btn btn-primary" style="margin: 0; padding: 5px 12px; width: auto; font-size: 12px; border-radius: 6px; background-color: #0284c7;"><i class="fa fa-arrow-left"></i> Return Now</a>
+        </div>
+        <table style="width: 100%;">
             <tr>
-                <td><a href="{{$url}}" class="btn btn-info"><i class="fa fa-arrow-left"></i> {{trans('file.Back')}}</a> </td>
-                <td><button onclick="window.print();" class="btn btn-primary"><i class="dripicons-print"></i> {{trans('file.Print')}}</button></td>
+                <td style="padding-right: 4px; width: 50%;"><a href="{{$pos_url}}" class="btn btn-info" style="margin: 0; border-radius: 6px;"><i class="fa fa-arrow-left"></i> {{trans('file.Back')}}</a> </td>
+                <td style="padding-left: 4px; width: 50%;"><button onclick="triggerPrint();" class="btn btn-primary" style="margin: 0; border-radius: 6px;"><i class="dripicons-print"></i> {{trans('file.Print')}}</button></td>
             </tr>
         </table>
         <br>
@@ -225,11 +230,55 @@
 </div>
 
 <script type="text/javascript">
-    localStorage.clear();
-    function auto_print() {     
-        window.print()
+    // Clear only POS active cart storage items, preserving user session
+    var posKeys = [
+        "tbody-id", "localStorageProductId", "localStorageProductCode",
+        "localStorageSaleUnit", "localStorageTempUnitName", "localStorageSaleUnitOperator",
+        "localStorageSaleUnitOperationValue", "localStorageTaxName", "localStorageTaxRate",
+        "localStorageTaxMethod", "localStorageQty", "order-discount-value",
+        "order-discount", "order-tax-rate-select", "shipping-cost-val"
+    ];
+    for (var i = 0; i < posKeys.length; i++) {
+        try { localStorage.removeItem(posKeys[i]); } catch(e){}
     }
-    setTimeout(auto_print, 1000);
+
+    var posReturnUrl = "{{$pos_url}}";
+    var countdownSec = 4;
+    var timerInterval = null;
+
+    function returnToPos() {
+        if (timerInterval) clearInterval(timerInterval);
+        window.location.href = posReturnUrl;
+    }
+
+    function triggerPrint() {
+        try {
+            window.print();
+        } catch (e) {
+            console.error("Print trigger error:", e);
+        }
+    }
+
+    // Automatically trigger print as soon as page and barcode images load
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            triggerPrint();
+        }, 300);
+
+        timerInterval = setInterval(function() {
+            countdownSec--;
+            var countdownEl = document.getElementById('countdown');
+            if (countdownEl) countdownEl.innerText = countdownSec;
+            if (countdownSec <= 0) {
+                returnToPos();
+            }
+        }, 1000);
+    });
+
+    // When print dialog is finished or closed, return immediately to POS
+    window.onafterprint = function() {
+        setTimeout(returnToPos, 300);
+    };
 </script>
 
 </body>
