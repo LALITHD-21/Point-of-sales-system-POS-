@@ -435,12 +435,6 @@ git push origin feature/awesome-feature
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
----
-
 <div align="center">
 
 <br/>
@@ -453,7 +447,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 <br/>
 
-**Built with ❤️ using [Laravel](https://laravel.com)**
+**Made by [TECH_BOY_LALITH](https://github.com/LALITHD-21) 🚀**
 
 <br/>
 
